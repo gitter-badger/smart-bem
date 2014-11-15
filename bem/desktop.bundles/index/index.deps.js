@@ -66,6 +66,12 @@ exports.deps = [
         "elem": "js"
     },
     {
+        "block": "catalog"
+    },
+    {
+        "block": "legend"
+    },
+    {
         "block": "page"
     },
     {

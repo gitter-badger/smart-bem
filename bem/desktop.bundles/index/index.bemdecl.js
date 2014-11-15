@@ -9,5 +9,14 @@ exports.deps = [
     {
         "block": "page",
         "elem": "js"
+    },
+    {
+        "block": "catalog"
+    },
+    {
+        "block": "legend"
+    },
+    {
+        "block": "button"
     }
 ];
