@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/smart-bem/smart-bem",
   "dependencies": {
+    "bem-environ": "~1.4.0",
+    "bem": "0.9.0",
+    "bem-tools-autoprefixer": "0.0.3",
     "bh": "3.0.0",
     "borschik": "^1.3.2",
     "borschik-tech-cleancss": "1.0.3",
