@@ -30,3 +30,23 @@ _В данном модуле не должно быть никакой прив
 ### Плееры:
 
 1. [VLC](https://ru.wikipedia.org/wiki/VLC), [browser plugin](https://wiki.videolan.org/Documentation:WebPlugin/)
+
+### live streem
+
+```JSON
+    {
+        title: 'Europa plus',
+        url: 'http://europaplus.cdnvideo.ru/europaplus-live/eptv_main.sdp/playlist.m3u8',
+        type: 'hls'
+    },
+    {
+        title: 'PIK TV',
+        url: 'http://phone.pik-tv.com/live/mp4:piktv3pik3tv/playlist.m3u8',
+        type: 'hls'
+    },
+    {
+        title: 'Redbull',
+        url: 'http://live.iphone.redbull.de.edgesuite.net/webtvHD.m3u8',
+        type: 'hls'
+    }
+```

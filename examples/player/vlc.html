@@ -1,0 +1,95 @@
+<html>
+<title>VLC Mozilla plugin test page</title>
+<body>
+<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org"
+       width="640"
+       height="480"
+       id="vlc">
+</embed>
+<script language="Javascript">
+    <!--
+    var vlc = document.getElementById("vlc");
+    vlc.audio.toggleMute();
+    //!-->
+</script>
+
+<script language="javascript">
+    <!--
+    function registerVLCEvent(event, handler) {
+        var vlc = getVLC("vlc");
+        if (vlc) {
+            if (vlc.attachEvent) {
+                // Microsoft
+                vlc.attachEvent (event, handler);
+            } else if (vlc.addEventListener) {
+                // Mozilla: DOM level 2
+                vlc.addEventListener (event, handler, false);
+            } else {
+                // DOM level 0
+                vlc["on" + event] = handler;
+            }
+        }
+// stop listening to event
+        function unregisterVLCEvent(event, handler) {
+            var vlc = getVLC("vlc");
+            if (vlc) {
+                if (vlc.detachEvent) {
+                    // Microsoft
+                    vlc.detachEvent (event, handler);
+                } else if (vlc.removeEventListener) {
+                    // Mozilla: DOM level 2
+                    vlc.removeEventListener (event, handler, false);
+                } else {
+                    // DOM level 0
+                    vlc["on" + event] = null;
+                }
+            }
+// event callback function for testing
+            function handleEvents(event) {
+                if (!event)
+                    event = window.event; // IE
+                if (event.target) {
+                    // Netscape based browser
+                    targ = event.target;
+                } else if (event.srcElement) {
+                    // ActiveX
+                    targ = event.srcElement;
+                } else {
+                    // No event object, just the value
+                    alert("Event value" + event );
+                    return;
+                }
+                if (targ.nodeType == 3) // defeat Safari bug
+                    targ = targ.parentNode;
+                alert("Event " + event.type + " has fired from " + targ );
+            }
+// handle mouse grab event from video filter
+            function handleMouseGrab(event,X,Y) {
+                if (!event)
+                    event = window.event; // IE
+                alert("new position (" + X + "," + Y + ")");
+            }
+// Register a bunch of callbacks.
+            registerVLCEvent('MediaPlayerNothingSpecial', handleEvents);
+            registerVLCEvent('MediaPlayerOpening', handleEvents);
+            registerVLCEvent('MediaPlayerBuffering', handleEvents);
+            registerVLCEvent('MediaPlayerPlaying', handleEvents);
+            registerVLCEvent('MediaPlayerPaused', handleEvents);
+            registerVLCEvent('MediaPlayerForward', handleEvents);
+            registerVLCEvent('MediaPlayerBackward', handleEvents);
+            registerVLCEvent('MediaPlayerEncounteredError', handleEvents);
+            registerVLCEvent('MediaPlayerEndReached', handleEvents);
+            registerVLCEvent('MediaPlayerTimeChanged', handleEvents);
+            registerVLCEvent('MediaPlayerPositionChanged', handleEvents);
+            registerVLCEvent('MediaPlayerSeekableChanged', handleEvents);
+            registerVLCEvent('MediaPlayerPausableChanged', handleEvents);
+    -->
+</script>
+
+<script language="javascript">
+    var options = new Array(":aspect-ratio=4:3", "--rtsp-tcp");
+    var id = vlc.playlist.add("rtsp://servername/item/to/play", "fancy name", options);
+    vlc.playlist.playItem(id);
+</script>
+</body>
+</html>
