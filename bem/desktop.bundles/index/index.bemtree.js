@@ -19,12 +19,12 @@ function run(templates, context) {
   function template() {
     var id = index++;
     var match = !context.$override &&
-		Array.prototype.every.call(arguments, function(cond) {
+                Array.prototype.every.call(arguments, function(cond) {
       try {
-	return typeof cond === 'function' ? cond.call(context) : cond;
+        return typeof cond === 'function' ? cond.call(context) : cond;
       } catch (e) {
-	if (/Cannot read property/.test(e.message))
-	  return false;
+        if (/Cannot read property/.test(e.message))
+          return false;
       }
     });
 
@@ -39,9 +39,9 @@ function run(templates, context) {
 
     return function bodyHandler(body) {
       last = {
-	id: id,
-	body: typeof body === 'function' ? body.bind(context)
-					 : function() { return body }
+        id: id,
+        body: typeof body === 'function' ? body.bind(context)
+                                         : function() { return body }
       };
 
       return null;
@@ -54,37 +54,37 @@ function run(templates, context) {
 
     args.forEach(function(change) {
       if (change === null)
-	return;
+        return;
 
       if (typeof change !== 'object')
-	throw new Error('apply() and local() accepts only object literals');
+        throw new Error('apply() and local() accepts only object literals');
 
       Object.keys(change).forEach(function(key) {
-	var parts = key.split('.'),
-	    newValue = change[key],
-	    oldValue,
-	    isGlobal = parts[0] === '$$global',
-	    subContext = isGlobal ? globalCtx : context;
+        var parts = key.split('.'),
+            newValue = change[key],
+            oldValue,
+            isGlobal = parts[0] === '$$global',
+            subContext = isGlobal ? globalCtx : context;
 
-	if (isGlobal) {
-	  parts.shift();
-	}
+        if (isGlobal) {
+          parts.shift();
+        }
 
-	// Dive inside
-	for (var i = 0; i < parts.length - 1; i++) {
-	  subContext = subContext[parts[i]];
-	}
+        // Dive inside
+        for (var i = 0; i < parts.length - 1; i++) {
+          subContext = subContext[parts[i]];
+        }
 
-	// Set property and remember old value
-	oldValue = subContext[parts[i]];
-	subContext[parts[i]] = newValue;
+        // Set property and remember old value
+        oldValue = subContext[parts[i]];
+        subContext[parts[i]] = newValue;
 
-	// Push old value to backup list
-	backup.push({
-	  isGlobal: isGlobal,
-	  key: parts,
-	  value: oldValue
-	});
+        // Push old value to backup list
+        backup.push({
+          isGlobal: isGlobal,
+          key: parts,
+          value: oldValue
+        });
       });
     });
 
@@ -93,16 +93,16 @@ function run(templates, context) {
 
       // Rollback old values
       for (var i = backup.length - 1; i >= 0; i--) {
-	var subContext = backup[i].isGlobal ? globalCtx : context,
-	    change = backup[i];
+        var subContext = backup[i].isGlobal ? globalCtx : context,
+            change = backup[i];
 
-	// Dive inside
-	for (var j = 0; j < change.key.length - 1; j++) {
-	  subContext = subContext[change.key[j]];
-	}
+        // Dive inside
+        for (var j = 0; j < change.key.length - 1; j++) {
+          subContext = subContext[change.key[j]];
+        }
 
-	// Restore value
-	subContext[change.key[j]] = change.value;
+        // Restore value
+        subContext[change.key[j]] = change.value;
       }
 
       return result;
@@ -120,7 +120,7 @@ function run(templates, context) {
       var len = ignore.push(currentId);
       var ret = run(templates, context);
       if (len === ignore.length)
-	ignore.pop();
+        ignore.pop();
       return ret;
     });
   };
@@ -128,9 +128,9 @@ function run(templates, context) {
   function oninit(cb) {
     if (context.$init) {
       if (context.$context && !context.$context.resetApplyNext) {
-	context.$context.resetApplyNext = function(context) {
-	  context.$ignore.length = 0;
-	};
+        context.$context.resetApplyNext = function(context) {
+          context.$ignore.length = 0;
+        };
       }
 
       cb(exports, context.$context);
@@ -139,7 +139,7 @@ function run(templates, context) {
 
   function fetch(name) {
     var parts = name.split('.'),
-	value = globalCtx;
+        value = globalCtx;
 
     // Dive inside
     for (var i = 0; i < parts.length; i++) {
@@ -151,7 +151,7 @@ function run(templates, context) {
 
   function set(name, val) {
     var parts = name.split('.'),
-	value = globalCtx;
+        value = globalCtx;
 
     // Dive inside
     for (var i = 0; i < parts.length - 1; i++) {
@@ -163,7 +163,7 @@ function run(templates, context) {
   };
 
   templates.call(context, template, local, apply, applyNext, oninit, fetch,
-		 set);
+                 set);
 
   if (!last) {
     if (context.$init) return;
@@ -216,31 +216,31 @@ function templates(template, local, apply, applyNext, oninit, __$$fetch, __$$set
       return !item.__$parent;
     }).forEach(function(item) {
       function apply(conditions, item) {
-	if (item && item.__$children) {
-	  // Sub-template
-	  var subcond = conditions.concat(item.__$cond);
-	  item.__$children.forEach(function(child) {
-	    apply(subcond, child);
-	  });
-	} else {
-	  var hasBlock = false;
-	  var hasElem = false;
-	  conditions = conditions.filter(function(cond) {
-	    if (cond === __$blockRef) {
-	      hasBlock = true;
-	      return false;
-	    }
-	    if (cond === __$elemRef) {
-	      hasElem = true;
-	      return false;
-	    }
-	    return true;
-	  });
-	  if (hasBlock && !hasElem) conditions.push(!__$that.elem);
+        if (item && item.__$children) {
+          // Sub-template
+          var subcond = conditions.concat(item.__$cond);
+          item.__$children.forEach(function(child) {
+            apply(subcond, child);
+          });
+        } else {
+          var hasBlock = false;
+          var hasElem = false;
+          conditions = conditions.filter(function(cond) {
+            if (cond === __$blockRef) {
+              hasBlock = true;
+              return false;
+            }
+            if (cond === __$elemRef) {
+              hasElem = true;
+              return false;
+            }
+            return true;
+          });
+          if (hasBlock && !hasElem) conditions.push(!__$that.elem);
 
-	  // Body
-	  template.apply(null, conditions)(item);
-	}
+          // Body
+          template.apply(null, conditions)(item);
+        }
       }
       apply([], item);
     });
@@ -252,11 +252,11 @@ function templates(template, local, apply, applyNext, oninit, __$$fetch, __$$set
       var args = Array.prototype.slice.call(arguments);
 
       args.forEach(function(arg) {
-	if (arg && arg.__$children) {
-	  // Sub-template
-	  arg.__$parent = fn;
-	}
-	fn.__$children.push(arg);
+        if (arg && arg.__$children) {
+          // Sub-template
+          arg.__$parent = fn;
+        }
+        fn.__$children.push(arg);
       });
 
       // Handle match().match()
@@ -338,11 +338,11 @@ function templates(template, local, apply, applyNext, oninit, __$$fetch, __$$set
   apply = function(apply) {
     return function bemApply() {
       var args = Array.prototype.map.call(arguments, function(arg) {
-	if (typeof arg === 'string') {
-	  return { _mode: arg };
-	} else {
-	  return arg;
-	}
+        if (typeof arg === 'string') {
+          return { _mode: arg };
+        } else {
+          return arg;
+        }
       });
       return apply.apply(null, args);
     };
@@ -351,11 +351,11 @@ function templates(template, local, apply, applyNext, oninit, __$$fetch, __$$set
   applyNext = function(applyNext) {
     return function bemApplyNext() {
       var args = Array.prototype.map.call(arguments, function(arg) {
-	if (typeof arg === 'string') {
-	  return { _mode: arg };
-	} else {
-	  return arg;
-	}
+        if (typeof arg === 'string') {
+          return { _mode: arg };
+        } else {
+          return arg;
+        }
       });
       return applyNext.apply(null, args);
     };
@@ -364,11 +364,11 @@ function templates(template, local, apply, applyNext, oninit, __$$fetch, __$$set
   local = function(local) {
     return function bemLocal() {
       var args = Array.prototype.map.call(arguments, function(arg) {
-	if (typeof arg === 'string') {
-	  return { _mode: arg };
-	} else {
-	  return arg;
-	}
+        if (typeof arg === 'string') {
+          return { _mode: arg };
+        } else {
+          return arg;
+        }
       });
       return local.apply(null, args);
     };
@@ -388,22 +388,22 @@ function templates(template, local, apply, applyNext, oninit, __$$fetch, __$$set
 /// -------------------------------------
 /// ------ BEM-XJST User-code Start -----
 /// -------------------------------------
-/* begin: /Users/qfox/repos/smart-bem/libs/bem-core/common.blocks/i-bem/i-bem.bemtree */
+/* begin: d:\smart-bem\libs\bem-core\common.blocks/i-bem/i-bem.bemtree */
 oninit(function(exports) {
 
 var undef,
     BEM_ = {},
     toString = Object.prototype.toString,
     isArray = Array.isArray || function(obj) {
-	return toString.call(obj) === '[object Array]';
+        return toString.call(obj) === '[object Array]';
     },
     buildEscape = (function() {
-	var ts = { '"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;' },
-	    f = function(t) { return ts[t] || t };
-	return function(r) {
-	    r = new RegExp(r, 'g');
-	    return function(s) { return ('' + s).replace(r, f) }
-	};
+        var ts = { '"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;' },
+            f = function(t) { return ts[t] || t };
+        return function(r) {
+            r = new RegExp(r, 'g');
+            return function(s) { return ('' + s).replace(r, f) }
+        };
     })();
 
 function BEMContext(context, apply_) {
@@ -438,13 +438,13 @@ BEMContext.prototype.extend = function extend(o1, o2) {
 
 BEMContext.prototype.identify = (function() {
     var cnt = 0,
-	id = (+new Date()),
-	expando = '__' + id,
-	get = function() { return 'uniq' + id + ++cnt; };
+        id = (+new Date()),
+        expando = '__' + id,
+        get = function() { return 'uniq' + id + ++cnt; };
     return function(obj, onlyGet) {
-	if(!obj) return get();
-	if(onlyGet || obj[expando]) return obj[expando];
-	else return (obj[expando] = get());
+        if(!obj) return get();
+        if(onlyGet || obj[expando]) return obj[expando];
+        else return (obj[expando] = get());
     };
 })();
 
@@ -457,22 +457,22 @@ BEMContext.prototype.generateId = function generateId() {
 
 BEMContext.prototype.doAsync = function doAsync(fn) {
     var mode  = this._mode,
-	ctx   = this.ctx,
-	block = this.block,
-	elem  = this.elem,
-	mods  = this.mods,
-	elemMods = this.elemMods,
-	promise = Vow.invoke(fn);
+        ctx   = this.ctx,
+        block = this.block,
+        elem  = this.elem,
+        mods  = this.mods,
+        elemMods = this.elemMods,
+        promise = Vow.invoke(fn);
 
     this.__queue.push(promise);
 
     promise.always(function() {
-	this._mode = mode;
-	this.ctx   = ctx;
-	this.block = block;
-	this.elem  = elem;
-	this.mods  = mods;
-	this.elemMods = elemMods;
+        this._mode = mode;
+        this.ctx   = ctx;
+        this.block = block;
+        this.elem  = elem;
+        this.mods  = mods;
+        this.elemMods = elemMods;
     }.bind(this));
 
     return promise;
@@ -484,10 +484,10 @@ exports.apply = BEMContext.applyAsync = function BEMContext_applyAsync(context) 
     var ctx = new BEMContext(context || this, oldApply);
     ctx._buf = ctx.apply();
     return Vow
-	.allResolved(ctx.__queue)
-	.always(function() {
-	    return ctx._buf;
-	});
+        .allResolved(ctx.__queue)
+        .always(function() {
+            return ctx._buf;
+        });
 };
 
 });
@@ -495,40 +495,40 @@ exports.apply = BEMContext.applyAsync = function BEMContext_applyAsync(context) 
 match(this._mode === '')(
 
     match()(function() {
-	this.ctx || (this.ctx = {});
+        this.ctx || (this.ctx = {});
 
-	var vBlock = this.ctx.block,
-	    vElem = this.ctx.elem,
-	    block = this._currBlock || this.block;
+        var vBlock = this.ctx.block,
+            vElem = this.ctx.elem,
+            block = this._currBlock || this.block;
 
-	return apply('default', {
-	    block : vBlock || (vElem ? block : undefined),
-	    _currBlock : (vBlock || vElem) ? undefined : block,
-	    elem  : vElem,
-	    mods : vBlock? this.ctx.mods || (this.ctx.mods = {}) : this.mods,
-	    elemMods : this.ctx.elemMods || {}
-	});
+        return apply('default', {
+            block : vBlock || (vElem ? block : undefined),
+            _currBlock : (vBlock || vElem) ? undefined : block,
+            elem  : vElem,
+            mods : vBlock? this.ctx.mods || (this.ctx.mods = {}) : this.mods,
+            elemMods : this.ctx.elemMods || {}
+        });
     }),
 
     match(function() { return this.isArray(this.ctx) })(function() {
-	var ctx = this.ctx,
-	    len = ctx.length,
-	    i = 0,
-	    buf = [];
+        var ctx = this.ctx,
+            len = ctx.length,
+            i = 0,
+            buf = [];
 
-	while(i < len)
-	    buf.push(apply({ ctx: ctx[i++] }));
+        while(i < len)
+            buf.push(apply({ ctx: ctx[i++] }));
 
-	return buf;
+        return buf;
     }),
 
     match(function() { return !this.ctx })(),
 
     match(function() { return this.isSimple(this.ctx) })(function() {
-	var ctx = this.ctx;
-	if(ctx && ctx !== true || ctx === 0) {
-	    return ctx;
-	}
+        var ctx = this.ctx;
+        if(ctx && ctx !== true || ctx === 0) {
+            return ctx;
+        }
     })
 
 );
@@ -536,7 +536,7 @@ match(this._mode === '')(
 def()(function() {
     var content = apply('content');
     if(content || content === 0) {
-	this.ctx.content = apply('', { ctx : content });
+        this.ctx.content = apply('', { ctx : content });
     }
     return this.ctx;
 });
@@ -545,7 +545,7 @@ content()(function() {
     return this.ctx.content
 });
 
-/* end: /Users/qfox/repos/smart-bem/libs/bem-core/common.blocks/i-bem/i-bem.bemtree */;
+/* end: d:\smart-bem\libs\bem-core\common.blocks/i-bem/i-bem.bemtree */;
 /// -------------------------------------
 /// ------ BEM-XJST User-code End -------
 /// -------------------------------------
@@ -564,7 +564,7 @@ __$flush();
   if(typeof modules === "object") {
     modules.define("BEMTREE",
       function(provide) {
-	provide(__bem_xjst({})) });
+        provide(__bem_xjst({})) });
     defineAsGlobal = false;
   }
   defineAsGlobal && (g["BEMTREE"] = __bem_xjst({}));

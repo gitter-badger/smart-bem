@@ -1,82 +1,82 @@
 exports.deps = [
     {
-	"block": "i-bem"
+        "block": "i-bem"
     },
     {
-	"block": "i-bem",
-	"elem": "internal"
+        "block": "i-bem",
+        "elem": "internal"
     },
     {
-	"block": "inherit"
+        "block": "inherit"
     },
     {
-	"block": "identify"
+        "block": "identify"
     },
     {
-	"block": "next-tick"
+        "block": "next-tick"
     },
     {
-	"block": "objects"
+        "block": "objects"
     },
     {
-	"block": "functions"
+        "block": "functions"
     },
     {
-	"block": "events"
+        "block": "events"
     },
     {
-	"block": "i-bem",
-	"elem": "dom"
+        "block": "i-bem",
+        "elem": "dom"
     },
     {
-	"block": "jquery"
+        "block": "jquery"
     },
     {
-	"block": "loader"
+        "block": "loader"
     },
     {
-	"block": "loader",
-	"mod": "type"
+        "block": "loader",
+        "mod": "type"
     },
     {
-	"block": "jquery",
-	"elem": "config"
+        "block": "jquery",
+        "elem": "config"
     },
     {
-	"block": "ua"
+        "block": "ua"
     },
     {
-	"block": "dom"
+        "block": "dom"
     },
     {
-	"block": "i-bem",
-	"mod": "init"
+        "block": "i-bem",
+        "mod": "init"
     },
     {
-	"block": "i-bem",
-	"elem": "dom",
-	"mod": "init"
+        "block": "i-bem",
+        "elem": "dom",
+        "mod": "init"
     },
     {
-	"block": "page",
-	"elem": "css"
+        "block": "page",
+        "elem": "css"
     },
     {
-	"block": "page",
-	"elem": "js"
+        "block": "page",
+        "elem": "js"
     },
     {
-	"block": "page"
+        "block": "page"
     },
     {
-	"block": "i-bem",
-	"elem": "dom",
-	"mod": "init",
-	"val": "auto"
+        "block": "i-bem",
+        "elem": "dom",
+        "mod": "init",
+        "val": "auto"
     },
     {
-	"block": "loader",
-	"mod": "type",
-	"val": "js"
+        "block": "loader",
+        "mod": "type",
+        "val": "js"
     }
 ];
