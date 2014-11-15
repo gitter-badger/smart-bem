@@ -36,9 +36,7 @@ node_modules
 # bem
 .bem/cache/
 .enb/tmp/
-*bundles*/*/*.*
-!*bundles*/*/*.bemjson.js
-!*bundles*/.bem/*
-*pages*/*/*.*
-!*pages*/*/*.bemjson.js
-!*pages*/.bem/*
+bem/*bundles*/*/*.*
+!bem/*bundles*/*/*.bemjson.js
+!bem/*bundles*/.bem/*
+
