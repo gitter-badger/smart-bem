@@ -3,10 +3,6 @@
   "version": "0.0.0",
   "description": "Smart-TV framework",
   "main": "index.js",
-  "scripts": {
-    "test": "mocha",
-    "make": "enb make"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/smart-bem/smart-bem.git"
