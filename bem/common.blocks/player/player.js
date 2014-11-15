@@ -19,7 +19,7 @@ modules.define('player', function (resolve) {
         }
     };
 
-    PLayer.prototype = {
+    Player.prototype = {
 
         _createDom: function(config) {
 
