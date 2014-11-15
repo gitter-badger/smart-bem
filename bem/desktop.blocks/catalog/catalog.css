@@ -1,11 +1,9 @@
 .catalog {
 	min-height: 100%;
 	margin-bottom: -100px;
-	outline: 1px solid #ddd;
 }
 .catalog:after {
 	content: '';
 	height: 100px;
-	display: block;
-	outline: 1px solid red;
+	display: table;
 }

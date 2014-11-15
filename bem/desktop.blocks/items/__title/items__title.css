@@ -1,0 +1,9 @@
+.items__title {
+	font-size: 13px;
+	overflow: hidden;
+	-ms-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+}
