@@ -1,32 +1,229 @@
 <html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>VLC Mozilla plugin test page</title>
 <body>
-<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org"
-       width="640"
-       height="480"
-       id="vlc">
-</embed>
+<div class="player"></div>
 <script language="Javascript">
-    <!--
-    var vlc = document.getElementById("vlc");
-    //vlc.audio.toggleMute();
-    //!-->
+    var Player = function(config) {
+        this._createDom(config);
+
+        if (config.targetDom) {
+            this.appendTo(config.targetDom);
+        }
+    };
+
+    Player.prototype = {
+
+        _createDom: function(config) {
+
+            var vlc = document.createElement('EMBED');
+            vlc.type = 'application/x-vlc-plugin';
+            vlc.pluginspage = 'http://www.videolan.org';
+
+            vlc.width = config.width || 640;
+            vlc.height = config.height || 480;
+
+            this._player = vlc;
+
+            return this;
+        },
+
+        /**
+         * Вставить плеер в DOM едерево
+         * @param dom {Node} sample DIV
+         * @returns {XML|Node}
+         */
+        appendTo: function(dom) {
+            return dom.appendChild(this._player);
+        },
+
+        /**
+         * Добавить плейлист - массив объектов с url
+         * @param playlist {Array} [{ url:'http://videostream', title:'RedBull', options:[] }]
+         * options vlc - look README, sample  [":aspect-ratio=4:3"]
+         */
+        addPlaylist: function(playlist) {
+
+            console.log('playlist', playlist);
+
+            playlist = playlist.map((function(videoInfo) {
+
+
+                console.log('videoInfo ',videoInfo);
+
+                videoInfo.id = this.playlist.add(
+                        videoInfo.url, videoInfo.title);
+
+                console.log('videoInfo.id: ',videoInfo.id, videoInfo.title);
+
+                return videoInfo;
+                //this.playlist.playItem(videoInfo.id);
+
+            }).bind(this._player));
+
+        },
+
+        clearPLaylist: function() {
+            return this._player.playlist.items.clear();
+        },
+
+        play: function() {
+            return this._player.playlist.play();
+        },
+
+        next: function() {
+            return this._player.playlist.next();
+        },
+
+        prev: function() {
+            return this._player.playlist.prev();
+        },
+
+        stop: function() {
+            return this._player.playlist.stop();
+        },
+
+        isPlaying: function() {
+            return this._player.playlist.isPlaying;
+        },
+
+        getState: function() {
+            return this._player.input.state;
+        },
+
+        getNameState: function() {
+            return [
+                'IDLE',
+                'OPENING',
+                'BUFFERING',
+                'PLAYING',
+                'PAUSED',
+                'STOPPING',
+                'ENDED',
+                'ERROR'
+            ][this.getState()];
+        },
+
+        fullscreen: function() {
+
+        },
+
+        resume: function() {
+
+        },
+
+        ready: function() {
+
+        },
+
+        bufferingStart: function() {
+
+        },
+
+        bufferingEnd: function() {
+
+        },
+
+        error: function() {
+
+        },
+
+        insertLogo: function(file, options) {
+            var player = this._player;
+
+            if (player.video.logo == null) {
+                console.log('logo not suported');
+            }
+
+            player.video.logo.file(file);
+
+            if (options != null) {
+                this.setLogoOptions(options);
+            }
+
+            this.logoEnabled();
+        },
+        /**
+         * Change options for Logo
+         * @param options.opacity {Number} 0-255
+         * @param options.position {String} "center", "left", "right", "top", "top-left", "top-right", "bottom", "bottom-left", "bottom-right"
+         * @param options.delay {Number} (supported in this._player version >= 1.1.0) display each picture for a duration of 1000 ms (default) before displaying the next picture.
+         * @param options.repeat {Number} display each picture for a duration of 1000 ms (default) before displaying the next picture.
+         * @param options.x {Number} change the x-offset for displaying the picture counting from top-left on the screen.
+         * @param options.y {Number} change the y-offset for displaying the picture counting from top-left on the screen.
+         * @param options.width {Number} change the picture width.
+         * @param options.height {Number} change the picture height.
+         */
+        setLogoOptions: function(options) {
+            this._player.video.logo.opacity = typeof options.opacity === 'number' ? options.opacity : 255;
+            this._player.video.logo.delay = typeof options.delay === 'number' ? options.delay : 1000;
+
+            this._player.video.logo.position = 'center';
+            if (typeof options.position === 'string') {
+                this._player.video.logo.position  = options.position;
+            } else  {
+                this._player.video.logo.x = typeof options.x === 'number' ? options.x : 255;
+                this._player.video.logo.y = typeof options.y === 'number' ? options.y : 255;
+            }
+
+            this._player.video.logo.repeat = typeof options.repeat === 'number' ? options.repeat : 1000;
+
+            if (typeof options.width === 'number') {
+                this._player.video.logo.width = options.width;
+            }
+
+            if (typeof options.height) {
+                this._player.video.logo.height = options.height;
+            }
+        },
+
+        logoEnabled: function() {
+            return this._player.video.logo.enable();
+        },
+
+        logoDisabled: function() {
+            return this._player.video.logo.disable();
+        }
+
+    };
 </script>
-
-
+<script language="javascript">
+    var playlist = ([
+        {
+            title: 'Europa plus',
+            url: 'http://europaplus.cdnvideo.ru/europaplus-live/eptv_main.sdp/playlist.m3u8',
+            type: 'hls'
+        },
+        {
+            title: 'PIK TV',
+            url: 'http://phone.pik-tv.com/live/mp4:piktv3pik3tv/playlist.m3u8',
+            type: 'hls'
+        },
+        {
+            title: 'Redbull',
+            url: 'http://live.iphone.redbull.de.edgesuite.net/webtvHD.m3u8',
+            type: 'hls'
+        }
+    ]);
+</script>
 <script language="javascript">
     //var options = [];// new Array(":aspect-ratio=4:3", "--rtsp-tcp");
     //var id = vlc.playlist.add("rtsp://servername/item/to/play", "fancy name", options);
     //vlc.playlist.playItem(id);
 
-    var options = [":aspect-ratio=4:3"];
-    var id = vlc.playlist.add('http://phone.pik-tv.com/live/mp4:piktv3pik3tv/playlist.m3u8');
-    vlc.playlist.playItem(id);
+    var div = document.querySelector('.player');
 
-    // run play
-    vlc.playlist.play();
+    var player = new Player({
+        width: 600,
+        height: 460
+    });
 
-    setTimeout(vlc.playlist.stop.bind(vlc.playlist), 20000);
+    player.appendTo(div);
+    player.addPlaylist(playlist);
+
+    player.play();
+
+    player.insertLogo('bem.jpg');
 
 </script>
 </body>
