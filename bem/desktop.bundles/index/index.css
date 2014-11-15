@@ -19,3 +19,16 @@
   display: inline-block;
   vertical-align: middle;
 }
+/* d:\smart-bem\libs\my-blocks/page/_theme/page_theme_brew.styl:begin */
+html {
+  height: 100%;
+  font-size: 62.5%;
+}
+.page_theme_brew {
+  font-family: sans-serif;
+  height: 100%;
+  margin: 0;
+  font-size: 1.6em;
+  min-width: 100rem;
+}
+/* d:\smart-bem\libs\my-blocks/page/_theme/page_theme_brew.styl:end */

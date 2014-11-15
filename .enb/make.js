@@ -54,7 +54,7 @@ module.exports = function (config) {
 };
 
 function getDesktops(config) {
-    return [
+    var out = [
 	{ path: 'libs/bem-core/common.blocks', check: false },
 	{ path: 'libs/bem-core/desktop.blocks', check: false },
 	{ path: 'libs/bem-components/common.blocks', check: false },
@@ -65,6 +65,8 @@ function getDesktops(config) {
     ].map(function (level) {
 	return config.resolvePath(level);
     });
+	console.log(out);
+	return out;
 }
 
 function getTouchPhones(config) {

@@ -2,6 +2,7 @@
 	block: 'page',
 	title: 'Каталог фильмов, сериалов - Smart-TV framework',
 	styles: [
+		//{ elem: 'css', url: 'http://yastatic.net/bootstrap/3.1.1/css/bootstrap.min.css' },
 		{ elem: 'css', url: 'index.css' },
 		{ elem: 'css', url: 'http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' }
 	],

@@ -120,6 +120,14 @@ exports.deps = [
         "block": "control"
     },
     {
+        "block": "button",
+        "mod": "theme"
+    },
+    {
+        "block": "button",
+        "mod": "size"
+    },
+    {
         "block": "legend"
     },
     {
@@ -173,8 +181,18 @@ exports.deps = [
         "val": "pointerpressrelease"
     },
     {
-        "block": "page",
+        "block": "button",
         "mod": "theme",
         "val": "islands"
+    },
+    {
+        "block": "button",
+        "mod": "size",
+        "val": "s"
+    },
+    {
+        "block": "page",
+        "mod": "theme",
+        "val": "brew"
     }
 ];
