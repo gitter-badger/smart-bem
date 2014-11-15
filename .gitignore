@@ -30,8 +30,11 @@ node_modules
 # IDE
 .idea/
 
+# examples
+examples/player/video
+
 # bower libs
-/libs/
+libs/
 
 # enb cache
-/.enb/tmp/
+.enb/tmp/
