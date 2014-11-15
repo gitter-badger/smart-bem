@@ -1,4 +1,4 @@
-modules.define('navigation', ['lodash', 'jquery', 'core', 'platform'], function (provide, _, $, core, platform) {
+modules.define('navigation', ['jquery'], function (provide, $) {
 
 
 
