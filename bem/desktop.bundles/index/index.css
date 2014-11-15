@@ -1,12 +1,21 @@
-html {
-  height: 100%;
-  font-size: 62.5%;
+.catalog {
+  min-height: 100%;
+  margin-bottom: -100px;
+  outline: 1px solid #ddd;
 }
-.page {
-  font-family: 'Open Sans', sans-serif;
+.catalog:after {
+  content: '';
+  height: 100px;
+  display: block;
+  outline: 1px solid #f00;
+}
+.legend {
+  height: 100px;
+  background-color: #eee;
+}
+.legend:before {
+  content: '';
   height: 100%;
-  margin: 0 auto;
-  font-size: 1.6em;
-  min-width: 1270px;
-  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle;
 }

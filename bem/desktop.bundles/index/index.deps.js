@@ -69,6 +69,57 @@ exports.deps = [
         "block": "catalog"
     },
     {
+        "block": "button"
+    },
+    {
+        "block": "button",
+        "mod": "focused"
+    },
+    {
+        "block": "button",
+        "mod": "hovered"
+    },
+    {
+        "block": "button",
+        "mod": "disabled"
+    },
+    {
+        "block": "button",
+        "mod": "pressed"
+    },
+    {
+        "block": "button",
+        "elem": "text"
+    },
+    {
+        "block": "jquery",
+        "elem": "event"
+    },
+    {
+        "block": "jquery",
+        "elem": "event",
+        "mod": "type"
+    },
+    {
+        "block": "jquery",
+        "elem": "event",
+        "mod": "type",
+        "val": "pointerclick"
+    },
+    {
+        "block": "jquery",
+        "elem": "event",
+        "mod": "type",
+        "val": "pointernative"
+    },
+    {
+        "block": "keyboard",
+        "elem": "codes"
+    },
+    {
+        "block": "control"
+    },
+    {
         "block": "legend"
     },
     {
@@ -84,5 +135,46 @@ exports.deps = [
         "block": "loader",
         "mod": "type",
         "val": "js"
+    },
+    {
+        "block": "page",
+        "mod": "theme"
+    },
+    {
+        "block": "button",
+        "mod": "focused",
+        "val": "yes"
+    },
+    {
+        "block": "button",
+        "mod": "hovered",
+        "val": "yes"
+    },
+    {
+        "block": "button",
+        "mod": "disabled",
+        "val": "yes"
+    },
+    {
+        "block": "button",
+        "mod": "pressed",
+        "val": "yes"
+    },
+    {
+        "block": "jquery",
+        "elem": "event",
+        "mod": "type",
+        "val": "pointer"
+    },
+    {
+        "block": "jquery",
+        "elem": "event",
+        "mod": "type",
+        "val": "pointerpressrelease"
+    },
+    {
+        "block": "page",
+        "mod": "theme",
+        "val": "islands"
     }
 ];

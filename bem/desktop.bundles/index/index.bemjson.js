@@ -8,18 +8,23 @@
 	scripts: [
 		{ elem: 'js', url: 'index.js' }
 	],
+	mods: {
+		theme: 'brew'
+	},
 	content: [
 		{
 			block: 'catalog',
-			content: 'catalog'
+			content: [
+				{
+					block: 'button',
+					mods: { theme: 'islands', size: 's' },
+					text: 'button'
+				}
+			]
 		},
 		{
 			block: 'legend',
 			content: 'legend'
-		},
-		{
-			block: 'button',
-			content: 'кнопка'
 		}
 	]
 });

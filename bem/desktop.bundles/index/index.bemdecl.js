@@ -4,6 +4,11 @@ exports.deps = [
     },
     {
         "block": "page",
+        "mod": "theme",
+        "val": "brew"
+    },
+    {
+        "block": "page",
         "elem": "css"
     },
     {
@@ -14,9 +19,19 @@ exports.deps = [
         "block": "catalog"
     },
     {
-        "block": "legend"
+        "block": "button"
     },
     {
-        "block": "button"
+        "block": "button",
+        "mod": "theme",
+        "val": "islands"
+    },
+    {
+        "block": "button",
+        "mod": "size",
+        "val": "s"
+    },
+    {
+        "block": "legend"
     }
 ];

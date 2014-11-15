@@ -60,7 +60,8 @@ function getDesktops(config) {
 	{ path: 'libs/bem-components/common.blocks', check: false },
 	{ path: 'libs/bem-components/desktop.blocks', check: false },
 	'bem/common.blocks',
-	'bem/desktop.blocks'
+	'bem/desktop.blocks',
+	    'libs/my-blocks'
     ].map(function (level) {
 	return config.resolvePath(level);
     });
@@ -87,7 +88,8 @@ function getTvs(config) {
 	{ path: 'libs/bem-components/common.blocks', check: false },
 	{ path: 'libs/bem-components/desktop.blocks', check: false },
 	'bem/common.blocks',
-	'bem/tv.blocks'
+	'bem/tv.blocks',
+	    'libs/my-blocks'
     ].map(function (level) {
 	return config.resolvePath(level);
     });
