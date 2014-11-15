@@ -38,3 +38,10 @@ libs/
 
 # enb cache
 .enb/tmp/
+=======
+# bem
+.bem/cache/
+.enb/tmp/
+bem/*bundles*/*/*.*
+!bem/*bundles*/*/*.bemjson.js
+!bem/*bundles*/.bem/*
