@@ -57,7 +57,11 @@
 		},
 		{
 			block: 'legend',
-			content: 'content legend'
+			content: [
+				{
+					block: ''
+				}
+			]
 		}
 	]
 })

@@ -1,7 +1,8 @@
 ({
 	shouldDeps: [
 		{
-			block: 'link'
+			block: 'link',
+			block: 'box'
 		},
 		{
 			elems: [
