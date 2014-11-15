@@ -51,8 +51,8 @@ module.exports = function (config) {
             // js
             [techs.nodeJs, {target: '?.pre.node.js'}],
             [techs.prependYm, {source: '?.pre.node.js', target: '?.node.js'}],
-            // [techs.browserJs, {target: '?.pre.js'}],
-            // [techs.prependYm, {source: '?.pre.js', target: '?.js'}],
+            //[techs.browserJs, {target: '?.pre.js'}],
+            //[techs.prependYm, {source: '?.pre.js', target: '?.js'}],
 
             // css
             [techs.cssStylus, {target: '?.noprefix.css'}],

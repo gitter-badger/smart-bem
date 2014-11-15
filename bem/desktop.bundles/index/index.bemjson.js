@@ -55,7 +55,7 @@
 				}
 			]
 		},
-		{
+        {
 			block: 'legend',
 			content: [
 				{ items: [ 'r', 'g', 'b', 'y' ] }
