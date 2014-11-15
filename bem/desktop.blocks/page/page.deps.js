@@ -1,7 +1,7 @@
 ({
     shouldDeps: [
         {
-            block: 'navigator'
+            block: 'navigation'
         }
     ]
 })
