@@ -25,5 +25,5 @@ Framework for Smart-TV
 * [smartbox](https://github.com/pavelpower/smartbox/blob/develop/README_RU.md)
 * [codestyle](https://www.npmjs.org/package/jscs)
 * [bem-tools](https://www.npmjs.org/package/bem)
-* [BH  шаблонизатор](https://ru.bem.info/technology/bh/)
+* [BH шаблонизатор](https://ru.bem.info/technology/bh/)
 * [YModules](https://ru.bem.info/tools/bem/modules/)
