@@ -30,13 +30,18 @@ node_modules
 # IDE
 .idea/
 
-# bower libs
-/libs/
+# examples
+examples/player/video
 
+# bower libs
+libs/
+
+# enb cache
+.enb/tmp/
+=======
 # bem
 .bem/cache/
 .enb/tmp/
 bem/*bundles*/*/*.*
 !bem/*bundles*/*/*.bemjson.js
 !bem/*bundles*/.bem/*
-

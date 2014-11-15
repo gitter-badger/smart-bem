@@ -140,10 +140,12 @@ module.exports = function (config) {
 function getDesktops(config) {
     return [].concat(libsLevels).concat([
         'bem/common.blocks',
-        'bem/desktop.blocks'
+        'bem/desktop.blocks',
+        'libs/my-blocks'
     ]).map(function (level) {
         return config.resolvePath(level);
     });
+	return out;
 }
 
 function getTouchPhones(config) {
@@ -159,7 +161,8 @@ function getTouchPhones(config) {
 function getTvs(config) {
     return [].concat(libsLevels).concat([
         'bem/common.blocks',
-        'bem/tv.blocks'
+        'bem/tv.blocks',
+        'libs/my-blocks'
     ]).map(function (level) {
         return config.resolvePath(level);
     });
