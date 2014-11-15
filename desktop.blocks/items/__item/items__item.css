@@ -1,0 +1,10 @@
+.items__item {
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: top;
+	text-align: left;
+	width: 100px;
+	/*padding: 15px 0 0;*/
+	margin: 20px 0;
+	text-align: center;
+}

@@ -1,0 +1,12 @@
+.items {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: justify;
+}
+
+.items:after {
+	content: "";
+	display: inline-block;
+	width: 100%;
+}

@@ -1,0 +1,11 @@
+.legend {
+	height: 100px;
+	background-color: #ddd;
+}
+
+.legend:before {
+	content: '';
+	height: 100%;
+	display: inline-block;
+	vertical-align: middle;
+}

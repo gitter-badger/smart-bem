@@ -1,0 +1,9 @@
+.catalog {
+	min-height: 100%;
+	margin-bottom: -100px;
+}
+.catalog:after {
+	content: '';
+	height: 100px;
+	display: table;
+}
