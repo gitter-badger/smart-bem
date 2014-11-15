@@ -388,7 +388,7 @@ function templates(template, local, apply, applyNext, oninit, __$$fetch, __$$set
 /// -------------------------------------
 /// ------ BEM-XJST User-code Start -----
 /// -------------------------------------
-/* begin: /Users/qfox/repos/smart-bem/libs/bem-core/common.blocks/i-bem/i-bem.bemtree */
+/* begin: d:\smart-bem\libs\bem-core\common.blocks/i-bem/i-bem.bemtree */
 oninit(function(exports) {
 
 var undef,
@@ -545,7 +545,7 @@ content()(function() {
     return this.ctx.content
 });
 
-/* end: /Users/qfox/repos/smart-bem/libs/bem-core/common.blocks/i-bem/i-bem.bemtree */;
+/* end: d:\smart-bem\libs\bem-core\common.blocks/i-bem/i-bem.bemtree */;
 /// -------------------------------------
 /// ------ BEM-XJST User-code End -------
 /// -------------------------------------
