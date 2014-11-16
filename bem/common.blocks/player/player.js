@@ -30,21 +30,62 @@ modules.define('player', ['pub-sub'],function (provide, pubsub) {
         },
 
         _bindEvents: function() {
-            var eventNameSpace = 'player:';
+            var eventNameSpace, getEventName;
 
-            var getEventName = function(event) {
+            getEventName = function(event) {
                 return [eventNameSpace, event].join('');
             };
 
+            eventNameSpace = 'player:';
             pubsub.on(getEventName('play'), this.play.bind(this));
             pubsub.on(getEventName('stop'), this.play.bind(this));
             pubsub.on(getEventName('next'), this.play.bind(this));
             pubsub.on(getEventName('prev'), this.play.bind(this));
             pubsub.on(getEventName('mute'), this.toggleMute.bind(this));
-            pubsub.on(getEventName('volume'), this.toggleMute.bind(this));
+            pubsub.on(getEventName('volume'), this.volume.bind(this));
 
+            this._registerEvent('MediaPlayerPlaying', function(event) {
+                pubsub.emit(getEventName('playing'), event);
+            });
 
-            function handleEvents(event) {
+            this._registerEvent('MediaPlayerPaused', function(event) {
+                pubsub.emit(getEventName('paused'), event);
+            });
+
+            this._registerEvent('MediaPlayerPausableChanged', function(event) {
+                if (this.getNameState() === 'PLAYING') {
+                    pubsub.emit(getEventName('resume'), event);
+                }
+            });
+
+            this._registerEvent('MediaPlayerSeekableChanged', function(event) {
+                if (this.getNameState() === 'STOPPING') {
+                    pubsub.emit(getEventName('stopped'), event);
+                }
+            });
+
+            this._registerEvent('MediaPlayerBuffering', function(event) {
+                if (this.getNameState() === 'BUFFERING') {
+                    pubsub.emit(getEventName('bufferingStart'), event);
+                }
+            });
+
+            this._registerEvent('MediaPlayerBuffering', function(event) {
+                if (this.getNameState() !== 'BUFFERING') {
+                    pubsub.emit(getEventName('bufferingEnd'), event);
+                }
+            });
+
+            this._registerEvent('MediaPlayerEncounteredError', function(event) {
+                pubsub.emit(getEventName('error'), event);
+            });
+
+        },
+
+        _registerEvent: function (eventName, handler) {
+            var player = this._player;
+
+            handler = function getEventNormalize(eventName, callback) {
                 var targ;
 
                 //this: Player
@@ -65,50 +106,15 @@ modules.define('player', ['pub-sub'],function (provide, pubsub) {
                     targ = targ.parentNode;
                 }
 
-                pubsub.emit(getEventName(event.type), event);
-            }
+                event.name = eventName;
+                event.target = targ;
 
-            /*
-             MediaPlayerNothingSpecial: vlc is in idle state doing nothing but waiting for a command to be issued
-             MediaPlayerOpening: vlc is opening an media resource locator (MRL)
-             MediaPlayerBuffering: vlc is buffering
-             MediaPlayerPlaying: vlc is playing a media
-             MediaPlayerPaused: vlc is in paused state
-             MediaPlayerStopped: vlc is in stopped state
-             MediaPlayerForward: vlc is fastforwarding through the media (works only when an input supports forward playback)
-             MediaPlayerBackward: vlc is going backwards through the media (works only when an input supports backwards playback)
-             MediaPlayerEncounteredError: vlc has encountered an error and is unable to continue
-             MediaPlayerEndReached: vlc has reached the end of current playlist
-             MediaPlayerTimeChanged: time has changed
-             MediaPlayerPositionChanged: media position has changed
-             MediaPlayerSeekableChanged: media seekable flag has changed (true means media is seekable, false means it is not)
-             MediaPlayerPausableChanged: media pausable flag has changed (true means media is pauseable, false means it is not)
-             */
-
-            this._registerEvent('MediaPlayerNothingSpecial', handleEvents);
-            this._registerEvent('MediaPlayerOpening', handleEvents);
-            this._registerEvent('MediaPlayerBuffering', handleEvents);
-            this._registerEvent('MediaPlayerPlaying', handleEvents);
-            this._registerEvent('MediaPlayerPaused', handleEvents);
-            this._registerEvent('MediaPlayerForward', handleEvents);
-            this._registerEvent('MediaPlayerBackward', handleEvents);
-            this._registerEvent('MediaPlayerEncounteredError', handleEvents);
-            this._registerEvent('MediaPlayerEndReached', handleEvents);
-            this._registerEvent('MediaPlayerTimeChanged', handleEvents);
-            this._registerEvent('MediaPlayerPositionChanged', handleEvents);
-            this._registerEvent('MediaPlayerSeekableChanged', handleEvents);
-            this._registerEvent('MediaPlayerPausableChanged', handleEvents);
-
-        },
-
-        _registerEvent: function (eventName, handler) {
-            var player = this._player;
-
-            handler = handler.bind(this);
+                callback.call(player, event);
+            };
 
             if (player.attachEvent) {
                 player.attachEvent (eventName, handler);
-            } else if (vlc.addEventListener) {
+            } else if (player.addEventListener) {
                 player.addEventListener (eventName, handler, false);
             } else {
                 player['on' + eventName] = handler;
