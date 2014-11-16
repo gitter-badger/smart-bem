@@ -1,28 +1,32 @@
 ({
-    block: 'page',
-    title: 'desk',
-    head: [
-        { elem: 'css', url: '_desk.css' }
-    ],
-    scripts: [{ elem: 'js', url: '_desk.js' }],
+	block: 'page',
+	title: 'desk',
+	head: [
+		{ elem: 'css', url: '_desk.css' }
+	],
+	scripts: [
+		{ elem: 'js', url: '_desk.js' }
+	],
 	mods: { theme: 'brew' },
 	content: [
 		{
 			block: 'desk',
 			content: [
 				{
-					block: 'desk',
-					tag: 'img',
-					attrs: { src: 'desk.jpg' }
+					block: 'image',
+					url: '../../desktop.blocks/image/desk.jpg',
+					alt: 'пульт'
 				}
 			]
 		},
 		{
 			block: 'legend',
-			mix: [{
-				block: 'bg',
-				mods: { color: 'gray' }
-			}],
+			mix: [
+				{
+					block: 'bg',
+					mods: { color: 'gray' }
+				}
+			],
 			content: [
 				{
 					elem: 'desc',
