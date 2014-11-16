@@ -1,32 +1,9 @@
 modules.define('player', function (resolve) {
+    provide({
 
-    /*
-    * play
-    * pause
-    * resume
-    * stop
-    * ready (получена вся информация о потоке и готовность проигрвания)
-    * bufferingStart
-    * bufferingEnd
-    * error
-    */
+        init: function(config) {
 
-    var Player = function(config) {
-        this._createDom(config);
-
-        if (config.targetDom) {
-            this.appendTo(config.targetDom);
-        }
-    };
-
-    Player.prototype = {
-
-        _createDom: function(config) {
-
-            var vlc = document.createElement('EMBED');
-            vlc.type = 'application/x-vlc-plugin';
-            vlc.pluginspage = 'http://www.videolan.org';
-
+            var vlc = document.querySelector('.player EMBED');
             vlc.width = config.width || 640;
             vlc.height = config.height || 480;
 
@@ -34,47 +11,40 @@ modules.define('player', function (resolve) {
 
             return this;
         },
-
-        /**
-         * Вставить плеер в DOM едерево
-         * @param dom {Node} sample DIV
-         * @returns {XML|Node}
-         */
-        appendTo: function(dom) {
-            return dom.appendChild(this._player);
-        },
-
         /**
          * Добавить плейлист - массив объектов с url
-         * @param playlist {Array} [{ url:'http://videostream', name:'RedBull', options:[] }]
+         * @param playlist {Array} [{ url:'http://videostream', title:'RedBull', options:[] }]
          * options vlc - look README, sample  [":aspect-ratio=4:3"]
          */
         addPlaylist: function(playlist) {
 
-            playlist.forEach((function(videoInfo) {
-
+            playlist.map((function(videoInfo) {
                 videoInfo.id = this.playlist.add(
-                    videoInfo.url,
-                    videoInfo.name || 'Some video',
-                    typeof videoInfo.options === 'array' || []
-                );
+                    videoInfo.url, videoInfo.title);
 
-                this.playlist.playItem(videoInfo.id);
-
+                return videoInfo;
             }).bind(this._player));
 
         },
 
         clearPLaylist: function() {
-           return this._player.playlist.items.clear();
+            return this._player.playlist.items.clear();
         },
 
         play: function() {
-            this._player.playlist.play();
+            return this._player.playlist.play();
+        },
+
+        next: function() {
+            return this._player.playlist.next();
+        },
+
+        prev: function() {
+            return this._player.playlist.prev();
         },
 
         stop: function() {
-            this._player.playlist.stop();
+            return this._player.playlist.stop();
         },
 
         isPlaying: function() {
@@ -122,25 +92,63 @@ modules.define('player', function (resolve) {
 
         },
 
-        insertLogo: function() {
-            /*
-             vlc.video.logo.opacity: (supported in vlc version >= 1.1.0) change the picture opacity, val is defined from 0 (completely transparent) to 255 (completely opaque).
-             vlc.video.logo.position: (supported in vlc version >= 1.1.0) change the text position ("center", "left", "right", "top", "top-left", "top-right", "bottom", "bottom-left", "bottom-right").
-             vlc.video.logo.delay: (supported in vlc version >= 1.1.0) display each picture for a duration of 1000 ms (default) before displaying the next picture.
-             vlc.video.logo.repeat: (supported in vlc version >= 1.1.0) number of loops for picture animation (-1=continuous, 0=disabled, n=n-times). The default is -1 (continuous).
-             vlc.video.logo.x: (supported in vlc version >= 1.1.0) change the x-offset for displaying the picture counting from top-left on the screen.
-             vlc.video.logo.y: (supported in vlc version >= 1.1.0) change the y-offset for displaying the picture counting from top-left on the screen.
-             vlc.video.logo.width: (supported in vlc version >= 1.1.0) change the picture width.
-             vlc.video.logo.height: (supported in vlc version >= 1.1.0) change the picture height.
-             methods
-             vlc.video.logo.enable(): (supported in vlc version >= 1.1.0) enable logo video filter.
-             vlc.video.logo.disable(): (supported in vlc version >= 1.1.0) disable logo video filter.
-             vlc.video.logo.file("file.png"): (supported in vlc version >= 1.1.0) display my file.png as logo on the screen.
-             Some problems may happen because of the VLC asynchronous functioning. To avoid it, after enabling logo video filter, you have to wait a little time before changing an option. But it should be fixed by the new vout implementation.
-             */
+        insertLogo: function(file, options) {
+            var player = this._player;
+
+            if (player.video.logo == null) {
+                console.log('logo not suported');
+            }
+
+            player.video.logo.file(file);
+
+            if (options != null) {
+                this.setLogoOptions(options);
+            }
+
+            this.logoEnabled();
+        },
+
+        /**
+         * Change options for Logo
+         * @param options.opacity {Number} 0-255
+         * @param options.position {String} "center", "left", "right", "top", "top-left", "top-right", "bottom", "bottom-left", "bottom-right"
+         * @param options.delay {Number} (supported in this._player version >= 1.1.0) display each picture for a duration of 1000 ms (default) before displaying the next picture.
+         * @param options.repeat {Number} display each picture for a duration of 1000 ms (default) before displaying the next picture.
+         * @param options.x {Number} change the x-offset for displaying the picture counting from top-left on the screen.
+         * @param options.y {Number} change the y-offset for displaying the picture counting from top-left on the screen.
+         * @param options.width {Number} change the picture width.
+         * @param options.height {Number} change the picture height.
+         */
+        setLogoOptions: function(options) {
+            this._player.video.logo.opacity = typeof options.opacity === 'number' ? options.opacity : 255;
+            this._player.video.logo.delay = typeof options.delay === 'number' ? options.delay : 1000;
+
+            this._player.video.logo.position = 'center';
+            if (typeof options.position === 'string') {
+                this._player.video.logo.position  = options.position;
+            } else  {
+                this._player.video.logo.x = typeof options.x === 'number' ? options.x : 255;
+                this._player.video.logo.y = typeof options.y === 'number' ? options.y : 255;
+            }
+
+            this._player.video.logo.repeat = typeof options.repeat === 'number' ? options.repeat : 1000;
+
+            if (typeof options.width === 'number') {
+                this._player.video.logo.width = options.width;
+            }
+
+            if (typeof options.height) {
+                this._player.video.logo.height = options.height;
+            }
+        },
+
+        logoEnabled: function() {
+            return this._player.video.logo.enable();
+        },
+
+        logoDisabled: function() {
+            return this._player.video.logo.disable();
         }
 
-    };
-
-    resolve(Core);
+    });
 });
