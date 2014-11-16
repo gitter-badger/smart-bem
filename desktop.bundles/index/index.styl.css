@@ -1,0 +1,236 @@
+/* ..\..\libs\my-blocks\page\_theme\page_theme_brew.styl begin */
+html {
+  height: 100%;
+  font-size: 62.5%;
+}
+.page_theme_brew {
+  font-family: 'Open Sans', sans-serif;
+  height: 100%;
+  margin: 0;
+  font-size: 1.6em;
+  min-width: 100%;
+}
+/* ..\..\libs\my-blocks\page\_theme\page_theme_brew.styl end */
+/* ..\..\desktop.blocks\catalog\catalog.css begin */
+.catalog {
+  min-height: 100%;
+  margin-bottom: -100px;
+}
+.catalog:after {
+  content: '';
+  height: 100px;
+  display: table;
+}
+/* ..\..\desktop.blocks\catalog\catalog.css end */
+/* ..\..\libs\my-blocks\bg\_pattern\bg_pattern_stripes.css begin */
+.bg_pattern_stripes {
+  background-image: url("../../libs/my-blocks/bg/_pattern/stripes.png");
+}
+/* ..\..\libs\my-blocks\bg\_pattern\bg_pattern_stripes.css end */
+/* ..\..\libs\my-blocks\bg\_gradient\bg_gradient_silver.css begin */
+.bg_gradient_silver:before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  background-image: -moz-linear-gradient(top, #000 0%, rgba(215,222,227,0) 50%, #000 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000), color-stop(50%, rgba(215,222,227,0)), color-stop(100%, #000));
+  background-image: -webkit-linear-gradient(top, #000 0%, rgba(215,222,227,0) 50%, #000 100%);
+  background-image: -o-linear-gradient(top, #000 0%, rgba(215,222,227,0) 50%, #000 100%);
+  background-image: -ms-linear-gradient(top, #000 0%, rgba(215,222,227,0) 50%, #000 100%);
+  background-image: linear-gradient(to bottom, #000 0%, rgba(215,222,227,0) 50%, #000 100%);
+}
+/* ..\..\libs\my-blocks\bg\_gradient\bg_gradient_silver.css end */
+/* ..\..\libs\my-blocks\bg\_color\bg_color_black.css begin */
+.bg_color_black {
+  background-color: #000;
+}
+/* ..\..\libs\my-blocks\bg\_color\bg_color_black.css end */
+/* ..\..\libs\my-blocks\bg\_color\bg_color_gray.css begin */
+.bg_color_gray {
+  background-color: #808080;
+}
+/* ..\..\libs\my-blocks\bg\_color\bg_color_gray.css end */
+/* ..\..\desktop.blocks\items\items.css begin */
+.items {
+  margin: 0;
+  padding: 40px;
+  list-style: none;
+  text-align: justify;
+}
+.items:after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+}
+/* ..\..\desktop.blocks\items\items.css end */
+/* ..\..\libs\my-blocks\box\box.css begin */
+/*
+    this style taken from this demo
+    http://www.paulund.co.uk/creating-different-css3-box-shadows-effects
+ */
+.box {
+  position: relative;
+/*padding: 20px 40px;*/
+  background-color: #fff !important;
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
+  -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
+}
+.box:before,
+.box:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  -moz-box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  top: 50%;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  -moz-border-radius: 100px/10px;
+  border-radius: 100px/10px;
+}
+.box:after {
+  right: 10px;
+  left: auto;
+  -webkit-transform: skew(8deg) rotate(3deg);
+  -moz-transform: skew(8deg) rotate(3deg);
+  -ms-transform: skew(8deg) rotate(3deg);
+  -o-transform: skew(8deg) rotate(3deg);
+  transform: skew(8deg) rotate(3deg);
+}
+.box__switcher {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #c0c0c0;
+  float: right;
+  cursor: pointer;
+}
+.box_closed_yes *:not(.box__switcher) {
+  display: none;
+}
+.box_closed_yes .box__switcher {
+  border-top: 7px solid #c0c0c0;
+  border-bottom: 0;
+}
+/* ..\..\libs\my-blocks\box\box.css end */
+/* ..\..\desktop.blocks\items\__image\items__image.css begin */
+.items__image {
+  width: 90px;
+  height: 120px;
+}
+/* ..\..\desktop.blocks\items\__image\items__image.css end */
+/* ..\..\desktop.blocks\items\__item\items__item.css begin */
+.items__item {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  text-align: left;
+  width: 100px;
+/*padding: 15px 0 0;*/
+  margin: 10px 10px 10px 0;
+  text-align: center;
+}
+/* ..\..\desktop.blocks\items\__item\items__item.css end */
+/* ..\..\desktop.blocks\items\__title\items__title.css begin */
+.items__title {
+  font-size: 13px;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+/* ..\..\desktop.blocks\items\__title\items__title.css end */
+/* ..\..\desktop.blocks\items\__price\items__price.css begin */
+.items__price {
+  position: relative;
+  display: block;
+}
+/* ..\..\desktop.blocks\items\__price\items__price.css end */
+/* ..\..\desktop.blocks\items\__link\items__link.css begin */
+.items__link {
+  display: block;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  background: #87cefa;
+  color: #fff;
+/*	padding: 12px 10px;
+		margin: 10px -30px 0 -30px;*/
+  -webkit-transition: background 0.2s ease-in;
+  -moz-transition: background 0.2s ease-in;
+  -ms-transition: background 0.2s ease-in;
+  -o-transition: background 0.2s ease-in;
+  transition: background 0.2s ease-in;
+}
+.items__link:hover {
+  background: #4169e1;
+}
+.items__item_new_yes .items__link {
+  background: #ffb6c1;
+}
+/* ..\..\desktop.blocks\items\__link\items__link.css end */
+/* ..\..\desktop.blocks\items\__sizer\items__sizer.css begin */
+.items__sizer {
+  display: inline-block;
+  width: 150px;
+  padding: 0 30px;
+}
+/* ..\..\desktop.blocks\items\__sizer\items__sizer.css end */
+/* ..\..\desktop.blocks\legend\legend.css begin */
+.legend {
+  height: 100px;
+  text-align: center;
+}
+.legend:before {
+  content: '';
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+/* ..\..\desktop.blocks\legend\legend.css end */
+/* ..\..\desktop.blocks\button\button.css begin */
+.button {
+  padding: 10px 20px;
+  margin: 0 3px;
+}
+/* ..\..\desktop.blocks\button\button.css end */
+/* ..\..\desktop.blocks\legend\__inner\legend__inner.css begin */
+.legend__inner {
+  display: inline-block;
+  vertical-align: middle;
+}
+/* ..\..\desktop.blocks\legend\__inner\legend__inner.css end */
+/* ..\..\desktop.blocks\legend\__desc\legend__desc.css begin */
+.legend__desc {
+  display: inline-block;
+  margin: 0 20px;
+}
+/* ..\..\desktop.blocks\legend\__desc\legend__desc.css end */
+/* ..\..\desktop.blocks\button\_bg\button_bg_red.css begin */
+.button_bg_red {
+  background-color: #f00;
+}
+/* ..\..\desktop.blocks\button\_bg\button_bg_red.css end */
+/* ..\..\desktop.blocks\button\_bg\button_bg_green.css begin */
+.button_bg_green {
+  background-color: #008000;
+}
+/* ..\..\desktop.blocks\button\_bg\button_bg_green.css end */
+/* ..\..\desktop.blocks\button\_bg\button_bg_yellow.css begin */
+.button_bg_yellow {
+  background-color: #ff0;
+}
+/* ..\..\desktop.blocks\button\_bg\button_bg_yellow.css end */
+/* ..\..\desktop.blocks\button\_bg\button_bg_blue.css begin */
+.button_bg_blue {
+  background-color: #00f;
+}
+/* ..\..\desktop.blocks\button\_bg\button_bg_blue.css end */

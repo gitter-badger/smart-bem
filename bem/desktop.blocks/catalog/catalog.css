@@ -1,7 +1,15 @@
 .catalog {
-	min-height: 100%;
+	height: 100%;
 	margin-bottom: -100px;
 }
+
+.catalog:before {
+	content: '';
+	height: 100%;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .catalog:after {
 	content: '';
 	height: 100px;
