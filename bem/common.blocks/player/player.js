@@ -1,4 +1,4 @@
-modules.define('player', function (resolve) {
+modules.define('player', function (provide) {
     provide({
 
         init: function(config) {
