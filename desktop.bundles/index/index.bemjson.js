@@ -16,6 +16,10 @@
 	content: [
 		{
 			block: 'catalog',
+			mix: [{
+				block: 'bg',
+				mods: { color: 'black' }
+			}],
 			content: [
 				{
 					block: 'items',
@@ -61,6 +65,10 @@
 		}*/
 		{
 			block: 'legend',
+			mix: [{
+				block: 'bg',
+				mods: { color: 'gray' }
+			}],
 			content: [
 				{
 					elem: 'desc',

@@ -1,7 +1,6 @@
 .legend {
 	height: 100px;
 	text-align: center;
-	background-color: #ddd;
 }
 
 .legend:before {
