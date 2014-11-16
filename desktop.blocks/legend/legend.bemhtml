@@ -1,0 +1,9 @@
+block('legend').match(!this._done)(
+	content()(function() {
+		this._done = true;
+		return {
+			elem: 'inner',
+			content: applyNext()
+		}
+	})
+)

@@ -6,8 +6,10 @@ block('items')(
 			return [
 				{
 					elem: 'item',
-					mods: { new: item.new ? 'yes' : undefined },
-					mix: [{ block: 'box' }],
+					//mods: { new: item.new ? 'yes' : undefined },
+					mix: [
+						{ block: 'box' }
+					],
 					content: [
 						{
 							elem: 'title',
