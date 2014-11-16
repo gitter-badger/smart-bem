@@ -6,10 +6,7 @@ block('items')(
 			return [
 				{
 					elem: 'item',
-					//mods: { new: item.new ? 'yes' : undefined },
-					mix: [
-						{ block: 'box' }
-					],
+					mods: { new: item.new ? 'yes' : undefined },
 					content: [
 						{
 							elem: 'title',
@@ -20,14 +17,14 @@ block('items')(
 							url: item.image
 						},
 						{
-							elem: 'price',
+							elem: 'desc',
 							content: {
 								block: 'link',
 								mix: [
 									{block: 'items', elem: 'link'}
 								],
 								url: item.url,
-								content: item.price
+								content: item.desc
 							}
 						}
 					]
@@ -53,9 +50,9 @@ block('items')(
 		attrs()(function() {
 			return { src: this.ctx.url };
 		})
-	),
-
-	elem('price')(
-		tag()('span')
 	)
+
+/*	elem('desc')(
+		tag()('span')
+	)*/
 );

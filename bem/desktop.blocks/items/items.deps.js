@@ -9,7 +9,7 @@
 				'image',
 				'item',
 				'title',
-				'price',
+				'desc',
 				'link',
 				'sizer'
 			]

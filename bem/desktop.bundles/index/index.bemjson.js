@@ -25,34 +25,58 @@
 					block: 'items',
 					items: [
 						{
-							title: 'Apple iPhone 4S 32Gb',
-							image: 'http://mdata.yandex.net/i?path=b1004232748_img_id8368283111385023010.jpg',
-							price: '259',
+							title: 'некий фильм',
+							image: 'http://kinofan.su/cache/com_zoo/images/kraftidioten_41f27c0b95f3474332f619025926d526.jpg',
+							desc: 'описание',
 							url: '/'
 						},
 						{
-							title: 'Samsung Galaxy Ace S5830',
-							image: 'http://mdata.yandex.net/i?path=b0206005907_img_id5777488190397681906.jpg',
-							price: '73',
+							title: 'некий фильм',
+							image: 'http://kinofan.su/cache/com_zoo/images/autmata_b3212532724479c07ed89114d6382ed8.jpg',
+							desc: '73',
 							url: '/'
 						},
 						{
-							title: 'HTC One S',
-							image: 'http://mdata.yandex.net/i?path=b0229115752_img_id5362588736801424341.jpg',
-							price: '152',
+							title: 'некий фильм',
+							image: 'http://kinofan.su/cache/com_zoo/images/nicht_mein_tag_6d7a8dec9e1f7bafdff4b803f66881b2.jpg',
+							desc: '152',
 							url: '/'
 						},
 						{
-							title: 'Sharp SH530U',
-							image: 'http://mdata.yandex.net/i?path=b1119145405_img_id7474251838115767025.jpg',
-							price: '***',
+							title: 'некий новый фильм',
+							image: 'http://kinofan.su/cache/com_zoo/images/stretch_113f774653307bac1ffcdc253414b452.jpg',
+							desc: '***',
 							url: '/',
 							new: true
 						},
 						{
-							title: 'Samsung Galaxy S III 16Gb',
-							image: 'http://mdata.yandex.net/i?path=b0503234231_img_id4954748565558111178.jpg',
-							price: '180',
+							title: 'некий фильм',
+							image: 'http://kinofan.su/cache/com_zoo/images/ek_villain_25ab26e3059dee9c0a2105a939712b83.jpg',
+							desc: '180',
+							url: '/'
+						},
+						{
+							title: 'некий фильм',
+							image: 'http://kinofan.su/cache/com_zoo/images/salvation_ff53f05bbd7722beb73fe2f98434bf5c.jpg',
+							desc: '180',
+							url: '/'
+						},
+						{
+							title: 'некий фильм',
+							image: 'http://kinofan.su/cache/com_zoo/images/ek_villain_25ab26e3059dee9c0a2105a939712b83.jpg',
+							desc: '180',
+							url: '/'
+						},
+						{
+							title: 'некий фильм',
+							image: 'http://kinofan.su/cache/com_zoo/images/supercondriaque_4aa87d0683fb1adf3bf6469643075221.jpg',
+							desc: '180',
+							url: '/'
+						},
+						{
+							title: 'некий фильм',
+							image: 'http://kinofan.su/cache/com_zoo/images/mardaani_e39140ee9d8418878453b74eec9cfca4.jpg',
+							desc: '180',
 							url: '/'
 						}
 					]

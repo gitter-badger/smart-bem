@@ -1,6 +1,7 @@
 .catalog {
 	height: 100%;
 	margin-bottom: -100px;
+	min-height: 500px;
 }
 
 .catalog:before {
@@ -8,10 +9,5 @@
 	height: 100%;
 	display: inline-block;
 	vertical-align: middle;
-}
-
-.catalog:after {
-	content: '';
-	height: 100px;
-	display: table;
+	margin-top: -100px;
 }
