@@ -1,5 +1,20 @@
-modules.define('keymap', ['lodash'], function (provide, _, prev) {
-    _.(prev, {
+modules.define('keymap', function (provide) {
+
+    provide({
+        detect: function () {
+            // always true for browser platform
+            return true;
+        },
+
+        getNativeDUID: function () {
+            if (navigator.userAgent.indexOf('Chrome') != -1) {
+                this.DUID = 'CHROMEISFINETOO';
+            } else {
+                this.DUID = 'FIREFOXISBEST';
+            }
+            return this.DUID;
+        },
+
         keys: {
             RIGHT: 39,
             LEFT: 37,
@@ -40,5 +55,4 @@ modules.define('keymap', ['lodash'], function (provide, _, prev) {
             APP: 81//q
         }
     });
-
 });

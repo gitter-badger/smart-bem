@@ -13,6 +13,8 @@
 		{ elem: 'js', url: '_index.js' }
 	],
 	mods: { theme: 'brew' },
+	cls: 'nav-type',
+	attrs:{ 'data-nav_type': 'hbox', 'data-nav_loop':'true'},
 	content: [
 		{
 			block: 'catalog',

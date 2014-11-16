@@ -1,11 +1,75 @@
-modules.define('navigation', ['jquery'], function (provide, $) {
+modules.define('navigation', ['jquery', 'keymap'], function (provide, $, keymap) {
 
-    console.log('jquery', $);
+    var $body = null,
 
-    var Nav = {
+        savedNavs = [],
+        navCur = null,
+
+        numsKeys = ['n0', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9'],
+        paused = 0,
+        Nav;
+
+    /**
+     * Handler for keydown events
+     * @param e
+     */
+    function onKeyDown (e) {
+        var data = {},
+            keyCode = e.keyCode,
+            key;
+
+        if (paused || !navCur) {
+            return;
+        }
+
+        // get key name by key code
+        key = keymap.keys[keyCode];
+
+        if (key) {
+            if (numsKeys.indexOf(key) > -1) {
+                // get 1 char from keyname
+                data.num = key[1];
+                key = 'num';
+            }
+
+            triggerKeyEvent(key, data);
+        }
+    }
+
+    /**
+     * 'nav:keyname' event trigger
+     * @param key key name
+     * @param data event data
+     */
+    function triggerKeyEvent (key, data) {
+        var ev;
+
+        if (navCur) {
+            ev = $.Event('nav:' + key, data || {});
+            ev.keyName = key;
+
+            navCur.trigger(ev);
+        }
+    }
+
+    /**
+     * trigger click on current element
+     */
+    function onClick () {
+        navCur && navCur.click();
+    }
+
+    /**
+     * Main navigation api
+     * @type {Object}
+     */
+    Nav = {
 
         // nav els selector
         area_selector: '.nav-item',
+
+        // selector for container with horizontal or vertical navigation
+        type_selector: '.nav-type',
 
         /**
          * Current el class
@@ -19,53 +83,28 @@ modules.define('navigation', ['jquery'], function (provide, $) {
          */
         $container: null,
 
-        /**
-         * Current looping type
-         * false/hbox/vbox
-         * @type {boolean|string}
-         */
-        loopType: null,
+        enableUserDefine: true,
+        enableEntryPoints: false,
 
-        /**
-         * Phantom els selector
-         * @type {string}
-         */
-        phantom_selector: '[data-nav-phantom]',
+        phantom_selector: '.nav-phantom',
 
-        /**
-         * Returns current navigation state
-         * @returns {boolean}
-         */
         isPaused: function () {
             return !!paused;
         },
 
-        /**
-         * Stop navigation. Increase pause counter
-         * @returns {Navigation}
-         */
         pause: function () {
             paused++;
             return this;
         },
 
-        /**
-         * Resume navigation if force or pause counter is zero
-         * @param force {Boolean} force navigation resume
-         * @returns {Navigation}
-         */
-        resume: function ( force ) {
+        resume: function (force) {
             paused--;
-            if ( paused < 0 || force ) {
+            if (paused < 0 || force) {
                 paused = 0;
             }
             return this;
         },
 
-        /**
-         * Save current navigation state
-         * @returns {Navigation}
-         */
         save: function () {
 
             savedNavs.push({
@@ -74,51 +113,50 @@ modules.define('navigation', ['jquery'], function (provide, $) {
                 higlight_class: this.higlight_class,
                 $container: this.$container
             });
+
             return this;
         },
 
-        /**
-         * Restore navigation state
-         * @returns {Navigation}
-         */
         restore: function () {
-            if ( savedNavs.length ) {
+            var state;
+
+            if (savedNavs.length) {
+                state = savedNavs.pop();
                 this.off();
-                var foo = savedNavs.pop();
-                this.area_selector = foo.area_selector;
-                this.higlight_class = foo.higlight_class;
-                this.on(foo.$container, foo.navCur);
+
+                this.area_selector = state.area_selector;
+                this.higlight_class = state.higlight_class;
+
+                this.on(state.$container, state.navCur);
             }
 
             return this;
         },
 
-        /**
-         * Setting focus on element
-         * @param element {*} - HTMLElement, selector or Jquery object
-         * @param originEvent {string} - event source(nav_key, mousemove, voice etc.)
-         * @return {Navigation}
-         */
-        current: function ( element, originEvent ) {
-            if ( !element ) {
+        current: function (element, originEvent) {
+            if (!element) {
                 return navCur;
             }
 
-            originEvent = originEvent || 'nav_key';
+            var $el = $(element),
+                old = navCur;
 
-            var $el = $(element);
-            if ( $el.is(this.phantom_selector) ) {
+            originEvent = originEvent || 'nav';
+
+            if ($el.is(this.phantom_selector)) {
                 $el = $($($el.attr('data-nav-phantom'))[0]);
             }
-            if ( $el.length > 1 ) {
-                throw new Error('Focused element must be only one!');
-            }
-            if ( !$el.length ) {
+
+            if ($el.length > 1) {
+                $el = $el.first();
+            } else if (!$el.length) {
                 return this;
             }
-            var old = navCur;
-            if ( navCur ) {
-                navCur.removeClass(this.higlight_class).trigger('nav_blur', [originEvent, $el]);
+
+            if (navCur) {
+                navCur
+                    .removeClass(this.higlight_class)
+                    .trigger('nav_blur', [originEvent, $el]);
             }
 
             navCur = $el;
@@ -127,16 +165,8 @@ modules.define('navigation', ['jquery'], function (provide, $) {
             return this;
         },
 
-        /**
-         * Turn on navigation in container, turn off previous navigation
-         * @param container - HTMLElement, selector or Jquery object (body by default)
-         * @param cur - HTMLElement, selector or Jquery object(first nav el by default)
-         * @return {Navigation}
-         */
-        on: function ( container, cur ) {
-
-            var self = this,
-                $navTypeEls;
+        on: function (container, cur) {
+            var $navTypeEls;
 
             $body = $body || $(document.body);
 
@@ -144,142 +174,117 @@ modules.define('navigation', ['jquery'], function (provide, $) {
 
             this.$container = container ? $(container) : $body;
 
-            if ( SB.platform != 'philips' ) {
-                this.$container.on('mouseenter.nav', this.area_selector, function ( e ) {
-                    if ( !$(this).is(self.phantom_selector) ) {
-                        self.current(this, 'mouseenter');
-                    }
-                });
-            }
+            $navTypeEls = this.$container.find(this.type_selector);
 
-            $navTypeEls = this.$container.find('[data-nav_type]');
-
-            if ( this.$container.attr('data-nav_type') ) {
+            if (this.$container.is(this.type_selector)) {
                 $navTypeEls = $navTypeEls.add(this.$container);
             }
 
-            $navTypeEls.each(function () {
-                var $el = $(this);
-                var navType = $el.attr("data-nav_type");
-                $el.removeAttr('data-nav_type');
-                //self.setLoop($el);
-                var loop = $el.attr("data-nav_loop");
+            $navTypeEls.each(this._setTypedNav, this);
 
-                self.siblingsTypeNav($el, navType, loop);
+            $body.on({
+                'keydown.navigation': onKeyDown,
+                'nav:enter.navigation': onClick
             });
 
-            $body
-                .bind('keydown.navigation', onKeyDown)
-                .bind('nav_key:enter.navigation', onClick);
+            console.log('ON BODY');
 
-            if ( !cur ) {
-                cur = this.$container.find(this.area_selector).filter(':visible')[0];
+            if (!cur) {
+                // TODO: remove :visible, it is very HEAVY filter!
+                cur = this.$container.find(this.area_selector).filter(':visible').first();
             }
+
             this.current(cur);
             return this;
         },
 
-        siblingsTypeNav: function ( $container, type, loop ) {
-            var self = this;
-            $container.on('nav_key:left nav_key:right nav_key:up nav_key:down', this.area_selector,
-                function ( e ) {
-                    var last = 'last',
-                        cur = self.current(),
+        /**
+         * Set horizontal or vertical type navigation in container
+         * @param el
+         */
+        _setTypedNav: function (i, el) {
+            var self = this,
+                $el = $(el),
+                type = el.getAttribute('data-nav_type'),
+                loop = !!el.getAttribute('data-nav_loop');
+
+            el.removeAttribute('data-nav_type');
+
+            // TODO: refactor, too HEAVY
+            $el.on('nav:left nav:right nav:up nav:down', this.area_selector,
+                function (e) {
+                    var key = e.keyName,
+                        currentEl = self.current(),
                         next,
+                        last,
                         fn;
 
                     //check if direction concur with declared
-                    if ( (type == 'hbox' && e.keyName == 'left') ||
-                        (type == 'vbox' && e.keyName == 'up') ) {
+                    if ((type === 'hbox' && key ==='left') ||
+                        (type === 'vbox' && key === 'up')) {
                         fn = 'prev';
-                    } else if ( (type == 'hbox' && e.keyName == 'right') ||
-                        (type == 'vbox' && e.keyName == 'down') ) {
+                    } else if ((type === 'hbox' && key === 'right') ||
+                        (type === 'vbox' && key === 'down')) {
                         fn = 'next';
                     }
 
-                    if ( fn == 'next' ) {
-                        last = 'first';
-                    }
+                    last = (fn === 'next') ? 'first' : 'last';
 
-                    if ( fn ) {
-                        next = cur[fn](self.area_selector);
+                    if (fn) {
+                        next = currentEl[fn](self.area_selector);
 
-                        while ( next.length && !next.is(':visible') ) {
+                        while (next.length && !next.is(':visible')) {
                             next = next[fn](self.area_selector);
                         }
 
-                        if ( !next.length && loop ) {
-                            next = $container.find(self.area_selector).filter(':visible')[last]();
+                        if (!next.length && loop) {
+                            next = $el.find(self.area_selector).filter(':visible')[last]();
                         }
 
-                        if ( next.length ) {
-                            nav.current(next);
+                        if (next.length) {
+                            self.current(next);
                             return false;
                         }
                     }
                 });
         },
 
-        /**
-         * Turn off navigation from container, disable navigation from current element
-         * @return {Navigation}
-         */
         off: function () {
-            if ( navCur ) {
-                navCur.removeClass(this.higlight_class).trigger('nav_blur');
+            if (navCur) {
+                navCur
+                    .removeClass(this.higlight_class)
+                    .trigger('nav_blur');
             }
-            this.$container && this.$container.off('mouseenter.nav').off('.loop');
-            $body.unbind('.navigation');
+
+            this.$container && this.$container.off('.loop');
+
+            $body.off('.navigation');
             navCur = null;
-            return this;
-        },
-
-        /**
-         * Find first nav el & set navigation on them
-         */
-        findSome: function () {
-            var cur;
-
-            if ( !(navCur && navCur.is(':visible')) ) {
-                cur = this.$container.find(this.area_selector).filter(':visible').eq(0);
-                this.current(cur);
-            }
 
             return this;
         },
 
-        /**
-         * Find closest to $el element by dir direction
-         * @param $el {jQuery} - source element
-         * @param dir {string} - direction up, right, down, left
-         * @param navs {jQuery} - object, contains elements to search
-         * @returns {*}
-         */
-        findNav: function ( $el, dir, navs ) {
-            var user_defined = this.checkUserDefined($el, dir);
+        findNav: function ($el, dir, navs) {
+            var userDefined = this.checkUserDefined($el, dir);
 
-            if ( user_defined ) {
-                if (user_defined === 'none') {
-                    return false;
-                } else {
-                    return user_defined;
-                }
+            if (userDefined) {
+                return userDefined === 'none' ? false : userDefined;
             }
 
             var objBounds = $el[0].getBoundingClientRect(),
                 arr = [],
                 curBounds = null,
-                cond1, cond2, i , l;
+                cond1, cond2, i, l;
 
-            for ( i = 0, l = navs.length; i < l; i++ ) {
+            for (i = 0, l = navs.length; i < l; i++) {
                 curBounds = navs[i].getBoundingClientRect();
 
-                if ( curBounds.left == objBounds.left &&
-                    curBounds.top == objBounds.top ) {
+                if (curBounds.left == objBounds.left &&
+                    curBounds.top == objBounds.top) {
                     continue;
                 }
 
-                switch ( dir ) {
+                switch (dir) {
                     case 'left':
                         cond1 = objBounds.left > curBounds.left;
                         break;
@@ -296,7 +301,7 @@ modules.define('navigation', ['jquery'], function (provide, $) {
                         break;
                 }
 
-                if ( cond1 ) {
+                if (cond1) {
                     arr.push({
                         'obj': navs[i],
                         'bounds': curBounds
@@ -307,18 +312,18 @@ modules.define('navigation', ['jquery'], function (provide, $) {
             var min_dy = 9999999, min_dx = 9999999, min_d = 9999999, max_intersection = 0;
             var dy = 0, dx = 0, d = 0;
 
-            function isIntersects ( b1, b2, dir ) {
+            function isIntersects (b1, b2, dir) {
                 var temp = null;
-                switch ( dir ) {
+                switch (dir) {
                     case 'left':
                     case 'right':
-                        if ( b1.top > b2.top ) {
+                        if (b1.top > b2.top) {
                             temp = b2;
                             b2 = b1;
                             b1 = temp;
                         }
-                        if ( b1.bottom > b2.top ) {
-                            if ( b1.top > b2.right ) {
+                        if (b1.bottom > b2.top) {
+                            if (b1.top > b2.right) {
                                 return b2.top - b1.right;
                             }
                             else {
@@ -328,13 +333,13 @@ modules.define('navigation', ['jquery'], function (provide, $) {
                         break;
                     case 'up':
                     case 'down':
-                        if ( b1.left > b2.left ) {
+                        if (b1.left > b2.left) {
                             temp = b2;
                             b2 = b1;
                             b1 = temp;
                         }
-                        if ( b1.right > b2.left ) {
-                            if ( b1.left > b2.right ) {
+                        if (b1.right > b2.left) {
+                            if (b1.left > b2.right) {
                                 return b2.left - b1.right;
                             }
                             else {
@@ -351,8 +356,8 @@ modules.define('navigation', ['jquery'], function (provide, $) {
             var intersects_any = false;
             var found = false;
 
-            for ( i = 0, l = arr.length; i < l; i++ ) {
-                if ( !this.checkEntryPoint(arr[i].obj, dir) ) {
+            for (i = 0, l = arr.length; i < l; i++) {
+                if (!this.checkEntryPoint(arr[i].obj, dir)) {
                     continue;
                 }
 
@@ -361,10 +366,10 @@ modules.define('navigation', ['jquery'], function (provide, $) {
                 dy = Math.abs(b.top - objBounds.top);
                 dx = Math.abs(b.left - objBounds.left);
                 d = Math.sqrt(dy * dy + dx * dx);
-                if ( intersects_any && !intersects ) {
+                if (intersects_any && !intersects) {
                     continue;
                 }
-                if ( intersects && !intersects_any ) {
+                if (intersects && !intersects_any) {
                     min_dy = dy;
                     min_dx = dx;
                     max_intersection = intersects;
@@ -373,10 +378,10 @@ modules.define('navigation', ['jquery'], function (provide, $) {
                     continue;
                 }
 
-                switch ( dir ) {
+                switch (dir) {
                     case 'left':
                     case 'right':
-                        if ( intersects_any ) {
+                        if (intersects_any) {
                             cond2 = dx < min_dx || (dx == min_dx && dy < min_dy);
                         }
                         else {
@@ -385,7 +390,7 @@ modules.define('navigation', ['jquery'], function (provide, $) {
                         break;
                     case 'up':
                     case 'down':
-                        if ( intersects_any ) {
+                        if (intersects_any) {
                             cond2 = dy < min_dy || (dy == min_dy && dx < min_dx);
                         }
                         else {
@@ -395,7 +400,7 @@ modules.define('navigation', ['jquery'], function (provide, $) {
                     default:
                         break;
                 }
-                if ( cond2 ) {
+                if (cond2) {
                     min_dy = dy;
                     min_dx = dx;
                     min_d = d;
@@ -406,27 +411,26 @@ modules.define('navigation', ['jquery'], function (provide, $) {
             return found;
         },
 
-        /**
-         * Return element defied by user
-         * Если юзером ничего не определено или направление равно 0, то возвращает false
-         * Если направление определено как none, то переход по этому направлению запрещен
-         *
-         * @param $el - current element
-         * @param dir - direction
-         * @returns {*}
-         */
-        checkUserDefined: function ( $el, dir ) {
-            var ep = $el.data('nav_ud'),
-                result = false,
-                res = $el.data('nav_ud_' + dir);
-            if (!ep && !res) {
+        checkUserDefined: function ($el, dir) {
+
+            if (!this.enableUserDefine) {
                 return false;
             }
 
-            if ( !res ) {
-                var sides = ep.split(','),
-                    dirs = ['up', 'right', 'down', 'left'];
-                if(sides.length !== 4) {
+            var userDefined = $el.data('nav_ud'),
+                res = $el.data('nav_ud_' + dir),
+                result = false,
+                dirs = ['up', 'right', 'down', 'left'],
+                sides;
+
+            if (!userDefined && !res) {
+                return false;
+            }
+
+            if (!res) {
+                sides = userDefined.split(',');
+
+                if (sides.length !== 4) {
                     return false;
                 }
 
@@ -440,45 +444,39 @@ modules.define('navigation', ['jquery'], function (provide, $) {
                 res = sides[dirs.indexOf(dir)];
             }
 
-            if ( res == 'none' ) {
-                result = 'none';
-            } else if( res == '0' ) {
-                result = false;
-            } else if ( res ) {
-                result = $(res).first();
+            switch (res) {
+                case 'none':
+                    result = 'none';
+                    break;
+                case '0':
+                    result = false;
+                    break;
+                default:
+                    result = $(res).first();
+                    break;
             }
+
             return result;
         },
 
-        /**
-         * Проверяет можно ли войти в элемент с определенной стороны.
-         * Работает если у элемента задан атрибут data-nav_ep. Точки входа задаются в атрибуте с помощью 0 и 1 через запятые
-         * 0 - входить нельзя
-         * 1 - входить можно
-         * Стороны указываются в порядке CSS - top, right, bottom, left
-         *
-         * data-nav_ep="0,0,0,0" - в элемент зайти нельзя, поведение такое же как у элемента не являющегося элементом навигации
-         * data-nav_ep="1,1,1,1" - поведение по умолчанию, как без задания этого атрибута
-         * data-nav_ep="0,1,0,0" - в элемент можно зайти справа
-         * data-nav_ep="1,1,0,1" - в элемент нельзя зайти снизу
-         * data-nav_ep="0,1,0,1" - можно зайти слева и справа, но нельзя сверху и снизу
-         *
-         * @param elem -  проверяемый элемент
-         * @param dir - направление
-         * @returns {boolean}
-         */
-        checkEntryPoint: function ( elem, dir ) {
+        checkEntryPoint: function (elem, dir) {
+
+            if (!this.enableEntryPoints) {
+                return true;
+            }
+
             var $el = $(elem),
                 ep = $el.attr('data-nav_ep'),
-                res = null;
+                res;
 
-            if ( !ep ) {
+            if (!ep) {
                 return true;
             }
 
             res = $el.attr('data-nav_ep_' + dir);
 
-            if ( res === undefined ) {
+            // can be 0
+            if (res === undefined) {
                 var sides = ep.split(',');
                 $el.attr('data-nav_ep_top', sides[0]);
                 $el.attr('data-nav_ep_right', sides[1]);
