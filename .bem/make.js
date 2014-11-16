@@ -9,7 +9,9 @@ require('bem-tools-autoprefixer').extendMake(MAKE);
 MAKE.decl('Arch', {
 
     blocksLevelsRegexp : /^.+?\.blocks/,
-    bundlesLevelsRegexp : /^.+?\.bundles$/
+    getBundlesLevels: function(from) {
+        return [PATH.join(from, 'bem', 'desktop.bundles')];
+    }
 
 });
 
@@ -37,7 +39,7 @@ MAKE.decl('BundleNode', {
 
     getLevelsMap : function() {
         return {
-            desktop : [
+            'bem/desktop' : [
                 'libs/bem-core/common.blocks',
                 'libs/bem-core/desktop.blocks',
                 'libs/bem-components/common.blocks',
