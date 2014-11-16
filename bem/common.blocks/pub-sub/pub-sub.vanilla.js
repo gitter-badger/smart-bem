@@ -24,10 +24,10 @@ modules.define('pub-sub', ['socketio', 'events__channels'], function (provide, i
         console.log("Global Event = "+event+"; Arguments = "+JSON.stringify(args));
     });
 */
-
     var channel = channels('socketio');
     var socket = io.socket || io('//localhost:8081');
     var broadcasting = [];
+debugger;
 
     socket.on(function (ev, msg) {
         channel.emit(ev, msg);
