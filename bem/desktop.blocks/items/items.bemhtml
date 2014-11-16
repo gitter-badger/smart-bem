@@ -5,7 +5,8 @@ block('items')(
 		return this.ctx.items.map(function(item) {
 			return [
 				{
-					elem: 'item',
+				elem: 'item',
+				cls: 'nav-item',
 					//mods: { new: item.new ? 'yes' : undefined },
 					mix: [
 						{ block: 'box' }
