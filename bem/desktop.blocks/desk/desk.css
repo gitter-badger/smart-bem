@@ -1,10 +1,10 @@
-.catalog {
+.desk {
 	height: 100%;
 	margin-bottom: -100px;
 	min-height: 500px;
 }
 
-.catalog:before {
+.desk:before {
 	content: '';
 	height: 100%;
 	display: inline-block;
