@@ -1,4 +1,4 @@
-modules.define('player', function (provide) {
+modules.define('player', ['pub-sub'],function (provide, pubsub) {
     provide({
 
         init: function(config) {
@@ -8,6 +8,8 @@ modules.define('player', function (provide) {
             vlc.height = config.height || 480;
 
             this._player = vlc;
+
+            this._bindEvents();
 
             return this;
         },
@@ -25,6 +27,92 @@ modules.define('player', function (provide) {
                 return videoInfo;
             }).bind(this._player));
 
+        },
+
+        _bindEvents: function() {
+            var eventNameSpace = 'player:';
+
+            var getEventName = function(event) {
+                return [eventNameSpace, event].join('');
+            };
+
+            pubsub.on(getEventName('play'), this.play.bind(this));
+            pubsub.on(getEventName('stop'), this.play.bind(this));
+            pubsub.on(getEventName('next'), this.play.bind(this));
+            pubsub.on(getEventName('prev'), this.play.bind(this));
+            pubsub.on(getEventName('mute'), this.toggleMute.bind(this));
+            pubsub.on(getEventName('volume'), this.toggleMute.bind(this));
+
+
+            function handleEvents(event) {
+                var targ;
+
+                //this: Player
+                if (!event) {
+                    event = window.event;
+                }
+
+                if (event.target) {
+                    // Netscape based browser
+                    targ = event.target;
+                } else if (event.srcElement) {
+                    // ActiveX
+                    targ = event.srcElement;
+                } else
+
+                if (targ.nodeType === 3) {
+                    // defeat Safari bug
+                    targ = targ.parentNode;
+                }
+
+                pubsub.emit(getEventName(event.type), event);
+            }
+
+            /*
+             MediaPlayerNothingSpecial: vlc is in idle state doing nothing but waiting for a command to be issued
+             MediaPlayerOpening: vlc is opening an media resource locator (MRL)
+             MediaPlayerBuffering: vlc is buffering
+             MediaPlayerPlaying: vlc is playing a media
+             MediaPlayerPaused: vlc is in paused state
+             MediaPlayerStopped: vlc is in stopped state
+             MediaPlayerForward: vlc is fastforwarding through the media (works only when an input supports forward playback)
+             MediaPlayerBackward: vlc is going backwards through the media (works only when an input supports backwards playback)
+             MediaPlayerEncounteredError: vlc has encountered an error and is unable to continue
+             MediaPlayerEndReached: vlc has reached the end of current playlist
+             MediaPlayerTimeChanged: time has changed
+             MediaPlayerPositionChanged: media position has changed
+             MediaPlayerSeekableChanged: media seekable flag has changed (true means media is seekable, false means it is not)
+             MediaPlayerPausableChanged: media pausable flag has changed (true means media is pauseable, false means it is not)
+             */
+
+            this._registerEvent('MediaPlayerNothingSpecial', handleEvents);
+            this._registerEvent('MediaPlayerOpening', handleEvents);
+            this._registerEvent('MediaPlayerBuffering', handleEvents);
+            this._registerEvent('MediaPlayerPlaying', handleEvents);
+            this._registerEvent('MediaPlayerPaused', handleEvents);
+            this._registerEvent('MediaPlayerForward', handleEvents);
+            this._registerEvent('MediaPlayerBackward', handleEvents);
+            this._registerEvent('MediaPlayerEncounteredError', handleEvents);
+            this._registerEvent('MediaPlayerEndReached', handleEvents);
+            this._registerEvent('MediaPlayerTimeChanged', handleEvents);
+            this._registerEvent('MediaPlayerPositionChanged', handleEvents);
+            this._registerEvent('MediaPlayerSeekableChanged', handleEvents);
+            this._registerEvent('MediaPlayerPausableChanged', handleEvents);
+
+        },
+
+        _registerEvent: function (eventName, handler) {
+            var player = this._player;
+
+            handler = handler.bind(this);
+
+            if (player.attachEvent) {
+                player.attachEvent (eventName, handler);
+            } else if (vlc.addEventListener) {
+                player.addEventListener (eventName, handler, false);
+            } else {
+                player['on' + eventName] = handler;
+            }
         },
 
         clearPLaylist: function() {
@@ -45,6 +133,22 @@ modules.define('player', function (provide) {
 
         stop: function() {
             return this._player.playlist.stop();
+        },
+
+        /**
+         * volume
+         * @param value {Number} min 0 max 200
+         */
+        volume: function(value) {
+            value = typeof value === 'number' ? value : 100;
+
+            value = value < 0 ? 0 : (value > 200 ? 200 : value);
+
+            this._player.audio.volume = value;
+        },
+
+        toggleMute: function() {
+            this._player.audio.toggleMute()
         },
 
         isPlaying: function() {
