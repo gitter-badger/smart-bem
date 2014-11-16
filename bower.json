@@ -9,11 +9,7 @@
     "libs"
   ],
   "dependencies": {
-    "bem-core": "v2.3.0",
-    "bem-components": "5f3cefd5fa1c7e5205d51fa10b8e3b59c31529d2",
-	  "my-blocks": "https://github.com/weynemeynen/repo.git#71f03683826bc06bfd6cb2853f97a1a4143050a4"
-  },
-  "resolutions": {
-    "bem-core": "v2.3.0"
+    "bem-components": "441539094ab9ce22121bfa341777e1af2fd3c956",
+    "my-blocks": "https://github.com/weynemeynen/repo.git#71f03683826bc06bfd6cb2853f97a1a4143050a4"
   }
 }
