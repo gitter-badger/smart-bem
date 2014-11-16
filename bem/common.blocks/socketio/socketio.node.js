@@ -17,8 +17,13 @@ function handler(req, res) {
 }
 
 io.on('connection', function (socket) {
+  console.log('connection happend');
+  console.log('emitting news');
   socket.emit('news', {hello: 'world'});
-  socket.on('my other event', function (data) {
+  socket.on('any', function (data) {
     console.log(data);
+  });
+  socket.on('disconnect', function () {
+    console.log('disconnected');
   });
 });
