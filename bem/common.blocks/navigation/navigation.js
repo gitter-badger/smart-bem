@@ -75,7 +75,7 @@ modules.define('navigation', ['jquery', 'keymap'], function (provide, $, keymap)
          * Current el class
          * @type {string}
          */
-        higlight_class: 'focus',
+        higlight_class: 'items__item_new_yes',
 
         /**
          * navigation container
@@ -180,7 +180,7 @@ modules.define('navigation', ['jquery', 'keymap'], function (provide, $, keymap)
                 $navTypeEls = $navTypeEls.add(this.$container);
             }
 
-            $navTypeEls.each(this._setTypedNav, this);
+            $navTypeEls.each(this._setTypedNav.bind(this));
 
             $body.on({
                 'keydown.navigation': onKeyDown,
