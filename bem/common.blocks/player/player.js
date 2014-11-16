@@ -172,30 +172,6 @@ modules.define('player', ['pub-sub'],function (provide, pubsub) {
             ][this.getState()];
         },
 
-        fullscreen: function() {
-
-        },
-
-        resume: function() {
-
-        },
-
-        ready: function() {
-
-        },
-
-        bufferingStart: function() {
-
-        },
-
-        bufferingEnd: function() {
-
-        },
-
-        error: function() {
-
-        },
-
         insertLogo: function(file, options) {
             var player = this._player;
 
