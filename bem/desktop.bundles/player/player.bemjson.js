@@ -1,20 +1,11 @@
 ({
-	block: 'page',
-	title: 'Каталог фильмов, сериалов - Smart-TV framework',
-	favicon: '/favicon.ico',
-	head: [
-		{ elem: 'meta', attrs: { name: 'description', content: '' } },
-		{ elem: 'meta', attrs: { name: 'viewport', content: 'width=device-width, initial-scale=1' } },
-		//{ elem: 'css', url: 'http://yastatic.net/bootstrap/3.1.1/css/bootstrap.min.css' },
-			{ elem: 'css', url: 'http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' },
-		{ elem: 'css', url: '_index.css' }
-	],
-	scripts: [
-		{ elem: 'js', url: '_index.js' }
-	],
+    block: 'page',
+    title: 'player',
+    head: [
+        { elem: 'css', url: '_player.css' }
+    ],
+    scripts: [{ elem: 'js', url: '_player.js' }],
 	mods: { theme: 'brew' },
-	cls: 'nav-type',
-	attrs:{ 'data-nav_type': 'hbox', 'data-nav_loop':'true'},
 	content: [
 		{
 			block: 'catalog',
