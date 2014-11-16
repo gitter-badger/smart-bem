@@ -42,20 +42,23 @@ module.exports = function (config) {
 
     config.nodes('bem/*.bundles/*', function (nodeConfig) {
         nodeConfig.addTechs([
+            // essential
+            // [enbBemTechs.levels, { levels: levels }],
             [techs.fileProvider, {target: '?.bemjson.js'}],
-            [techs.files],
-            [techs.deps],
-            [techs.bemdeclFromBemjson],
+            [enbBemTechs.bemjsonToBemdecl],
+            [enbBemTechs.deps],
+            [enbBemTechs.files],
             // [techs.bemtree],
+
+            // css
+            [techs.cssStylus, {target: '?.noprefix.css'}],
+            // + autoprefixer for different levels
 
             // js
             [techs.nodeJs, {target: '?.pre.node.js'}],
             [techs.prependYm, {source: '?.pre.node.js', target: '?.node.js'}],
-            //[techs.browserJs, {target: '?.pre.js'}],
-            //[techs.prependYm, {source: '?.pre.js', target: '?.js'}],
-
-            // css
-            [techs.cssStylus, {target: '?.noprefix.css'}],
+            // [techs.browserJs, {target: '?.pre.js'}],
+            // [techs.prependYm, {source: '?.pre.js', target: '?.js'}],
 
             // bh
             [techs.bhServer],
@@ -109,7 +112,6 @@ module.exports = function (config) {
     });
 
     config.nodes('bem/*desktop.bundles/*', function (nodeConfig) {
-        console.log(getDesktops(config));
         nodeConfig.addTechs([
             [require('enb/techs/levels'), {levels: getDesktops(config)}],
             [require('enb-autoprefixer/techs/css-autoprefixer'), {
@@ -145,7 +147,6 @@ function getDesktops(config) {
     ]).map(function (level) {
         return config.resolvePath(level);
     });
-	return out;
 }
 
 function getTouchPhones(config) {
