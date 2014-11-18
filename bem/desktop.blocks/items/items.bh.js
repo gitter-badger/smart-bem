@@ -3,9 +3,9 @@ module.exports = function (bh) {
         ctx.tag('ul');
     });
 
-	bh.match('items__item', function (ctx) {
+	/*bh.match('items__item', function (ctx) {
 		ctx.tag('li');
-	});
+	});*/
 
 	bh.match('items__title', function (ctx) {
 		ctx.tag('h3');

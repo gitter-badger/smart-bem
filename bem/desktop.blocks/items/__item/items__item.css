@@ -1,10 +1,11 @@
 .items__item {
-	display: inline-block;
-	overflow: hidden;
-	vertical-align: top;
-	text-align: left;
+	float: left;
+	/*display: inline-block;*/
+	/*vertical-align: middle;*/
 	width: 100px;
-	/*padding: 15px 0 0;*/
 	margin: 10px;
-	text-align: center;
+}
+
+.items__item:nth-child(3n-2) {
+	clear: left;
 }
