@@ -6,7 +6,7 @@
 		{ elem: 'meta', attrs: { name: 'description', content: '' } },
 		{ elem: 'meta', attrs: { name: 'viewport', content: 'width=device-width, initial-scale=1' } },
 		//{ elem: 'css', url: 'http://yastatic.net/bootstrap/3.1.1/css/bootstrap.min.css' },
-			{ elem: 'css', url: 'http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' },
+		{ elem: 'css', url: 'http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' },
 		{ elem: 'css', url: '_index.css' }
 	],
 	scripts: [
@@ -18,10 +18,12 @@
 	content: [
 		{
 			block: 'catalog',
-			mix: [{
-				block: 'bg',
-				mods: { color: 'black' }
-			}],
+			mix: [
+				{
+					block: 'bg',
+					mods: { color: 'black' }
+				}
+			],
 			content: [
 				{
 					block: 'items',
@@ -87,11 +89,18 @@
 		},
 		{
 			block: 'legend',
-			mix: [{
-				block: 'bg',
-				mods: { color: 'gray' }
-			}],
+			mix: [
+				{
+					block: 'bg',
+					mods: { color: 'white' }
+				}
+			],
 			content: [
+				{
+					block: 'button',
+					text: 'Текст кнопки из *.bemjson.js',
+					mods : { theme: 'islands', size: 'xl', view : 'action' }
+				},
 				{
 					elem: 'desc',
 					content: 'текстовое описание'
@@ -99,22 +108,22 @@
 				{
 					block: 'button',
 					mods: { bg: 'red' },
-					text: 'Red'
+					text: 'R'
 				},
 				{
 					block: 'button',
 					mods: { bg: 'green' },
-					text: 'Green'
+					text: 'G'
 				},
 				{
 					block: 'button',
 					mods: { bg: 'yellow' },
-					text: 'Yellow'
+					text: 'Y'
 				},
 				{
 					block: 'button',
 					mods: { bg: 'blue' },
-					text: 'Blue'
+					text: 'B'
 				}
 			]
 		}
