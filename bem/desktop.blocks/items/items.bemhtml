@@ -1,5 +1,5 @@
 block('items')(
-	tag()('ul'),
+	tag()('div'),
 
 	content()(function() {
 		return this.ctx.items.map(function(item) {
@@ -21,7 +21,8 @@ block('items')(
 							content: {
 								block: 'link',
 								mix: [
-									{block: 'items', elem: 'link'}
+									{block: 'items', elem: 'link'},
+									{block: 'text', elemMods: {color: 'black'}}
 								],
 								url: item.url,
 								content: item.desc
@@ -37,7 +38,7 @@ block('items')(
 	}),
 
 	elem('item')(
-		tag()('li')
+		tag()('div')
 	),
 
 	elem('title')(

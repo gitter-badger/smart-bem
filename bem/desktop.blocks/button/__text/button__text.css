@@ -1,5 +1,4 @@
 .button__text {
-	color: white;
 	font-family: monospace;
-	text-shadow: 0 0 5px black;
+	text-shadow: 0 0 1px white;
 }
