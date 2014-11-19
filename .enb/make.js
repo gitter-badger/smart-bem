@@ -1,3 +1,4 @@
+// loading techs libraries
 var techs = {
     // essential
     fileProvider: require('enb/techs/file-provider'),
@@ -26,15 +27,15 @@ var techs = {
     bhServer: require('enb-bh/techs/bh-server'),
     bhYm: require('enb-bh/techs/bh-client-module'),
 
-	// bemhtml
-	bemhtml: require('enb-bemxjst/techs/bemhtml-old'),
+    // bemhtml
+    bemhtml: require('enb-bemxjst/techs/bemhtml-old'),
 
-	// html
+    // html
     bhHtmlFromBemjson: require('enb-bh/techs/html-from-bemjson'),
-	bemhtmlHtmlFromBemjson: require('enb-bemxjst/techs/html-from-bemjson')
+    bemhtmlHtmlFromBemjson: require('enb-bemxjst/techs/html-from-bemjson')
 };
 var enbBemTechs = require('enb-bem-techs');
-var libsLevels = [
+var libsLevels = [ // chech false means no need to rebuild blocks in library
     {path: 'libs/bem-core/common.blocks', check: false},
     {path: 'libs/bem-core/desktop.blocks', check: false},
     {path: 'libs/bem-components/common.blocks', check: false},
@@ -49,7 +50,7 @@ module.exports = function (config) {
     config.nodes('bem/*.bundles/*', function (nodeConfig) {
         nodeConfig.addTechs([
             // essential
-            // [enbBemTechs.levels, { levels: levels }],
+            // [enbBemTechs.levels, {levels: levels}],
             [techs.fileProvider, {target: '?.bemjson.js'}],
             [enbBemTechs.bemjsonToBemdecl],
             [enbBemTechs.deps],
@@ -67,66 +68,56 @@ module.exports = function (config) {
             // [techs.prependYm, {source: '?.pre.js', target: '?.js'}],
 
             // bh
-            //[techs.bhServer],
-            //[techs.bhHtmlFromBemjson],
+            // [techs.bhServer],
+            // [techs.bhHtmlFromBemjson],
 
-	        // bemhtml
-	        [techs.bemhtml, { devMode: process.env.BEMHTML_ENV === 'development' }],
-	        [techs.bemhtmlHtmlFromBemjson],
+            // bemhtml
+            [techs.bemhtml, {devMode: process.env.BEMHTML_ENV === 'development'}],
+            [techs.bemhtmlHtmlFromBemjson],
 
             // client bh
             // [enbBemTechs.depsByTechToBemdecl, {target: '?.bh.bemdecl.js', sourceTech: 'js', destTech: 'bh'}],
-            // [enbBemTechs.deps, {target: '?.bh.deps.js', bemdeclFile: '?.bh.bemdecl.js' }],
+            // [enbBemTechs.deps, {target: '?.bh.deps.js', bemdeclFile: '?.bh.bemdecl.js'}],
             // [enbBemTechs.files, {depsFile: '?.bh.deps.js', filesTarget: '?.bh.files', dirsTarget: '?.bh.dirs'}],
-            // [techs.bhYm, {target: '?.browser.bh.js',filesTarget: '?.bh.files',jsAttrName: 'data-bem',jsAttrScheme: 'json'}],
+            // [techs.bhYm, {target: '?.browser.bh.js',
+            //     filesTarget: '?.bh.files', jsAttrName: 'data-bem', jsAttrScheme: 'json'}],
 
-			// client bemhtml
-	        [enbBemTechs.depsByTechToBemdecl, {
-		        target: '?.bemhtml.bemdecl.js',
-		        sourceTech: 'js',
-		        destTech: 'bemhtml'
-	        }],
-	        [enbBemTechs.deps, {
-		        target: '?.bemhtml.deps.js',
-		        bemdeclFile: '?.bemhtml.bemdecl.js'
-	        }],
-	        [enbBemTechs.files, {
-		        depsFile: '?.bemhtml.deps.js',
-		        filesTarget: '?.bemhtml.files',
-		        dirsTarget: '?.bemhtml.dirs'
-	        }],
-	        [techs.bemhtml, {
-		        target: '?.browser.bemhtml.js',
-		        filesTarget: '?.bemhtml.files',
-		        devMode: process.env.BEMHTML_ENV === 'development'
-	        }],
+            // client bemhtml
+            [enbBemTechs.depsByTechToBemdecl, {target: '?.bemhtml.bemdecl.js', sourceTech: 'js', destTech: 'bemhtml'}],
+            [enbBemTechs.deps, {target: '?.bemhtml.deps.js', bemdeclFile: '?.bemhtml.bemdecl.js'}],
+            [enbBemTechs.files, {depsFile: '?.bemhtml.deps.js', filesTarget: '?.bemhtml.files',
+                dirsTarget: '?.bemhtml.dirs'}],
+            [techs.bemhtml, {target: '?.browser.bemhtml.js', filesTarget: '?.bemhtml.files',
+                devMode: process.env.BEMHTML_ENV === 'development'}],
 
             // js
             [techs.browserJs],
-            [techs.fileMerge, {
-                target: '?.pre.js',
-                // sources: ['?.browser.bh.js', '?.browser.js']
-	            sources: ['?.browser.bemhtml.js', '?.browser.js']
-            }],
+            [techs.fileMerge, {target: '?.pre.js', sources: ['?.browser.bemhtml.js', '?.browser.js']}],
+            // [techs.fileMerge, {target: '?.pre.js', sources: ['?.browser.bh.js', '?.browser.js']}],
             [techs.prependYm, {source: '?.pre.js'}],
 
             // borschik
-            [techs.borschik, {sourceTarget: '?.js', destTarget: '_?.js',
-                freeze: true, minify: isProd}],
-            [techs.borschik, {sourceTarget: '?.css', destTarget: '_?.css', tech: 'cleancss',
-                freeze: true, minify: isProd}]
+            [techs.borschik, {sourceTarget: '?.js', destTarget: '_?.js', freeze: true, minify: isProd}],
+            [techs.borschik, {sourceTarget: '?.css', destTarget: '_?.css', freeze: true, minify: isProd,
+                tech: 'cleancss'}]
         ]);
 
+        // targets to build for each bundle
         nodeConfig.addTargets([
             '_?.css',
-            //'?.bemtree.js',
+            // '?.bemtree.js',
             '?.node.js',
             '_?.js',
+            // '?.bh.js',
             '?.bemhtml.js',
             '?.html'
         ]);
     });
 
+    // set levels for each bundle set
+    // additional techs for specified bundles
+
+    // add techs for desktop
     config.nodes('bem/*desktop.bundles/*', function (nodeConfig) {
         nodeConfig.addTechs([
             [require('enb/techs/levels'), {levels: getDesktops(config)}],
@@ -137,12 +128,7 @@ module.exports = function (config) {
         ]);
     });
 
-    config.nodes('bem/tv-*.bundles/*', function (nodeConfig) {
-        nodeConfig.addTechs([
-            [require('enb/techs/levels'), {levels: getTvs(config)}]
-        ]);
-    });
-
+    // -//- for touch platforms
     config.nodes('bem/*touch-phone.bundles/*', function (nodeConfig) {
         nodeConfig.addTechs([
             [require('enb/techs/levels'), {levels: getTouchPhones(config)}],
@@ -153,6 +139,12 @@ module.exports = function (config) {
         ]);
     });
 
+    // -//- for tvs
+    config.nodes('bem/tv-*.bundles/*', function (nodeConfig) {
+        nodeConfig.addTechs([
+            [require('enb/techs/levels'), {levels: getTvs(config)}]
+        ]);
+    });
 };
 
 function getDesktops(config) {
@@ -169,7 +161,8 @@ function getTouchPhones(config) {
     return [].concat(libsLevels).concat([
         'bem/common.blocks',
         'bem/touch.blocks',
-        'bem/touch-phone.blocks'
+        'bem/touch-phone.blocks',
+        'libs/my-blocks'
     ]).map(function (level) {
         return config.resolvePath(level);
     });
