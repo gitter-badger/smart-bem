@@ -15,7 +15,7 @@
 				{
 					block: 'image',
 					url: '../../desktop.blocks/image/desk.jpg',
-					alt: 'пульт'
+					alt: 'remote control'
 				}
 			]
 		},

@@ -1,13 +1,4 @@
 .catalog {
 	height: 100%;
 	margin-bottom: -100px;
-	min-height: 500px;
-}
-
-.catalog:before {
-	content: '';
-	height: 100%;
-	display: inline-block;
-	vertical-align: middle;
-	margin-top: -100px;
 }

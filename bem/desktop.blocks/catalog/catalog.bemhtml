@@ -1,0 +1,20 @@
+//block catalog, default: applyCtx({ block: 'b-wrapper', content: this.ctx })
+
+/*
+block('catalog')(def()
+		.match(!this.ctx._wrapped)(function() {
+		var ctx = this.ctx;
+		ctx._wrapped = true;
+		applyCtx({ block: 'catalog-wrapper', content: ctx })
+	})
+)*/
+
+block('catalog').match(!this._done)(
+	content()(function() {
+		this._done = true;
+		return {
+			elem: 'inner',
+			content: applyNext()
+		}
+	})
+)

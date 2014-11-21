@@ -13,18 +13,19 @@
 		{ elem: 'js', url: '_index.js' }
 	],
 	mods: { theme: 'brew' },
+	mix: [
+		{
+			block: 'bg',
+			mods: { color: 'black' }
+		}
+	],
 	content: [
 		{
 			block: 'catalog',
-			mix: [
-				{
-					block: 'bg',
-					mods: { color: 'black' }
-				}
-			],
 			content: [
 				{
 					block: 'items',
+					mix: { block: 'clearfix' },
 					items: [
 						{
 							title: 'некий фильм',
@@ -87,12 +88,12 @@
 		},
 		{
 			block: 'legend',
-			mix: [
+			/*mix: [
 				{
 					block: 'bg',
 					mods: { color: 'white' }
 				}
-			],
+			],*/
 			content: [
 				{
 					block: 'button',

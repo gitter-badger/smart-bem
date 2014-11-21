@@ -1,0 +1,10 @@
+({
+    mustDeps: [],
+    shouldDeps: [
+	    {
+		    elems: [
+			    'inner'
+		    ]
+	    }
+    ]
+})
