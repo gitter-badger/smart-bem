@@ -14,19 +14,20 @@
 	],
 	mods: { theme: 'brew' },
 	cls: 'nav-type',
-	attrs:{ 'data-nav_type': 'hbox', 'data-nav_loop':'true'},
+	attrs: { 'data-nav_type': 'hbox', 'data-nav_loop':'true'},
+	mix: [
+		{
+			block: 'bg',
+			mods: { color: 'black' }
+		}
+	],
 	content: [
 		{
 			block: 'catalog',
-			mix: [
-				{
-					block: 'bg',
-					mods: { color: 'black' }
-				}
-			],
 			content: [
 				{
 					block: 'items',
+					mix: { block: 'clearfix' },
 					items: [
 						{
 							title: 'некий фильм',
@@ -89,12 +90,12 @@
 		},
 		{
 			block: 'legend',
-			mix: [
+			/*mix: [
 				{
 					block: 'bg',
 					mods: { color: 'white' }
 				}
-			],
+			],*/
 			content: [
 				{
 					block: 'button',

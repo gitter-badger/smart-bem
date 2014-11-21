@@ -1,0 +1,16 @@
+.catalog__inner {
+	height: 100%;
+}
+
+.catalog__inner:before {
+	content: '';
+	height: 100%;
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: -100px;
+}
+.catalog__inner:after {
+	content: '';
+	float: left;
+	width: 100%;
+}

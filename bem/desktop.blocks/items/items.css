@@ -3,12 +3,5 @@
 	padding: 0;
 	list-style: none;
 	text-align: center;
-	/*width: 100%;*/
 	vertical-align: middle;
-}
-
-.items:after {
-	content: "";
-	display: inline-block;
-	width: 100%;
 }
