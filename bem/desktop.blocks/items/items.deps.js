@@ -13,10 +13,7 @@
 				'desc',
 				'link',
 				'sizer'
-			],
-			mods: {
-				size: 'small'
-			}
+			]
 		}
 	]
 })
