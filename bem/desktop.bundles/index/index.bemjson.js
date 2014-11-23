@@ -91,16 +91,16 @@
 		{
 			block: 'legend',
 			/*mix: [
-				{
-					block: 'bg',
-					mods: { color: 'white' }
-				}
-			],*/
+			 {
+			 block: 'bg',
+			 mods: { color: 'white' }
+			 }
+			 ],*/
 			content: [
 				{
 					block: 'button',
 					text: 'Текст кнопки из *.bemjson.js',
-					mods : { theme: 'islands', size: 'xl', view : 'action' }
+					mods: { theme: 'islands', size: 'xl', view: 'action' }
 				},
 				{
 					elem: 'desc',
