@@ -21,8 +21,8 @@ block('items')(
 							content: {
 								block: 'link',
 								mix: [
-									{block: 'items', elem: 'link'},
-									{block: 'text', elemMods: {color: 'black'}}
+									{ block: 'items', elem: 'link' },
+									{ block: 'text', elemMods: { color: 'black', size: 'small' }}
 								],
 								url: item.url,
 								content: item.desc

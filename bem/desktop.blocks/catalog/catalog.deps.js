@@ -1,10 +1,12 @@
 ({
-    mustDeps: [],
-    shouldDeps: [
-	    {
-		    elems: [
-			    'inner'
-		    ]
-	    }
-    ]
+	shouldDeps: [
+		{
+			elems: [
+				'inner'
+			],
+			mods: {
+				pattern: 'squared'
+			}
+		}
+	]
 })

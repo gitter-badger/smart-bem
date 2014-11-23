@@ -2,12 +2,4 @@
 	float: left;
 	width: 100%;
 	height: 100px;
-	background: maroon;
-}
-
-.legend:before {
-	content: '';
-	height: 100%;
-	display: inline-block;
-	vertical-align: middle;
 }

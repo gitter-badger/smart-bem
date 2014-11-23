@@ -4,6 +4,7 @@
 			block: 'link',
 			block: 'box'
 		},
+		{ block: 'text', mods: { size: 'small' }},
 		{
 			elems: [
 				'image',
@@ -12,7 +13,10 @@
 				'desc',
 				'link',
 				'sizer'
-			]
+			],
+			mods: {
+				size: 'small'
+			}
 		}
 	]
 })
