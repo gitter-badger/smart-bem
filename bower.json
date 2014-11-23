@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "bem-components": "441539094ab9ce22121bfa341777e1af2fd3c956",
-    "my-blocks": "https://github.com/weynemeynen/repo.git#71f03683826bc06bfd6cb2853f97a1a4143050a4"
+    "my-blocks": "https://github.com/weynemeynen/repo.git#95b104494878ee888667f43389dfd3c261b77662"
   },
   "resolutions": {
     "bem-core": "2.5.0"
