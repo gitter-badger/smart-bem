@@ -16,10 +16,8 @@
 	cls: 'nav-type',
 	attrs: { 'data-nav_type': 'hbox', 'data-nav_loop':'true'},
 	mix: [
-		{
-			block: 'bg',
-			mods: { color: 'black' }
-		}
+		{ block: 'bg', mods: { color: 'black' }},
+		{ block: 'align', mods: { horizontal: 'center' } }
 	],
 	content: [
 		{
@@ -27,7 +25,10 @@
 			content: [
 				{
 					block: 'items',
-					mix: { block: 'clearfix' },
+					mix: [
+						{ block: 'clearfix' },
+						{ block: 'bg', mods: { pattern: 'squared' }}
+					],
 					items: [
 						{
 							title: 'некий фильм',
@@ -90,12 +91,10 @@
 		},
 		{
 			block: 'legend',
-			/*mix: [
-			 {
-			 block: 'bg',
-			 mods: { color: 'white' }
-			 }
-			 ],*/
+			mix: [
+				{ block: 'align', mods: { vertical: 'middle' }},
+				{ block: 'bg', mods: { color: 'white', pattern: 'paper' }}
+			],
 			content: [
 				{
 					block: 'button',
