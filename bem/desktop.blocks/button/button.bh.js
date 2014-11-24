@@ -3,13 +3,14 @@ module.exports = function(bh) {
 	var bh = new (require('bh').BH);
 
 	bh.match('button', function(ctx) {
-
-		ctx.tag('em');
-
-		/*ctx.content({
-			elem: 'Текст кнопки из шаблонизатора button.bh.js',
+		ctx.tag('span');
+		ctx.content({
+			elem: 'text',
 			content: ctx.content()
-		}, true);*/
+		}, true);
 	});
+
+	bh.processBemJson({ block: 'button' });
+	bh.apply({ block: 'button' });
 
 };

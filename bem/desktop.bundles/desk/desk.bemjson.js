@@ -9,50 +9,18 @@
 	],
 	mods: { theme: 'brew' },
 	content: [
-		{
-			block: 'desk',
-			content: [
-				{
-					block: 'image',
-					url: '../../desktop.blocks/image/desk.jpg',
-					alt: 'remote control'
-				}
-			]
-		},
-		{
-			block: 'legend',
-			mix: [
-				{
-					block: 'bg',
-					mods: { color: 'gray' }
-				}
-			],
-			content: [
-				{
-					elem: 'desc',
-					content: 'текстовое описание'
-				},
-				{
-					block: 'button',
-					mods: { bg: 'red' },
-					text: 'Red'
-				},
-				{
-					block: 'button',
-					mods: { bg: 'green' },
-					text: 'Green'
-				},
-				{
-					block: 'button',
-					mods: { bg: 'yellow' },
-					text: 'Yellow'
-				},
-				{
-					block: 'button',
-					mods: { bg: 'blue' },
-					text: 'Blue'
-				}
-			]
-		}
+		{ block: 'button', content: 'Кнопка' }
+		/*
+		 {
+		 block: 'desk',
+		 content: [
+		 {
+		 block: 'image',
+		 url: '../../desktop.blocks/image/desk.jpg',
+		 alt: 'remote control'
+		 }
+		 ]
+		 },
+		 */
 	]
 })
