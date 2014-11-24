@@ -61,40 +61,40 @@ module.exports = function (config) {
             [techs.cssStylus, {target: '?.noprefix.css'}],
             // + autoprefixer for different levels
 
-            // js
+            // server js
             [techs.nodeJs, {target: '?.pre.node.js'}],
             [techs.prependYm, {source: '?.pre.node.js', target: '?.node.js'}],
-            // [techs.browserJs, {target: '?.pre.js'}],
-            // [techs.prependYm, {source: '?.pre.js', target: '?.js'}],
 
             // bh
-            // [techs.bhServer],
-            // [techs.bhHtmlFromBemjson],
+            [techs.bhServer],
+            [techs.bhHtmlFromBemjson],
 
             // bemhtml
-            [techs.bemhtml, {devMode: process.env.BEMHTML_ENV === 'development'}],
-            [techs.bemhtmlHtmlFromBemjson],
+            // [techs.bemhtml, {devMode: process.env.BEMHTML_ENV === 'development'}],
+            // [techs.bemhtmlHtmlFromBemjson],
 
             // client bh
-            // [enbBemTechs.depsByTechToBemdecl, {target: '?.bh.bemdecl.js', sourceTech: 'js', destTech: 'bh'}],
-            // [enbBemTechs.deps, {target: '?.bh.deps.js', bemdeclFile: '?.bh.bemdecl.js'}],
-            // [enbBemTechs.files, {depsFile: '?.bh.deps.js', filesTarget: '?.bh.files', dirsTarget: '?.bh.dirs'}],
-            // [techs.bhYm, {target: '?.browser.bh.js',
-            //     filesTarget: '?.bh.files', jsAttrName: 'data-bem', jsAttrScheme: 'json'}],
+            [enbBemTechs.depsByTechToBemdecl, {target: '?.bh.bemdecl.js', sourceTech: 'js', destTech: 'bh'}],
+            [enbBemTechs.deps, {target: '?.bh.deps.js', bemdeclFile: '?.bh.bemdecl.js'}],
+            [enbBemTechs.files, {depsFile: '?.bh.deps.js', filesTarget: '?.bh.files', dirsTarget: '?.bh.dirs'}],
+            [techs.bhYm, {target: '?.browser.bh.js',
+                 filesTarget: '?.bh.files', jsAttrName: 'data-bem', jsAttrScheme: 'json'}],
 
             // client bemhtml
-            [enbBemTechs.depsByTechToBemdecl, {target: '?.bemhtml.bemdecl.js', sourceTech: 'js', destTech: 'bemhtml'}],
-            [enbBemTechs.deps, {target: '?.bemhtml.deps.js', bemdeclFile: '?.bemhtml.bemdecl.js'}],
-            [enbBemTechs.files, {depsFile: '?.bemhtml.deps.js', filesTarget: '?.bemhtml.files',
-                dirsTarget: '?.bemhtml.dirs'}],
-            [techs.bemhtml, {target: '?.browser.bemhtml.js', filesTarget: '?.bemhtml.files',
-                devMode: process.env.BEMHTML_ENV === 'development'}],
+            // [enbBemTechs.depsByTechToBemdecl, {target: '?.bemhtml.bemdecl.js',
+            //     sourceTech: 'js', destTech: 'bemhtml'}],
+            // [enbBemTechs.deps, {target: '?.bemhtml.deps.js', bemdeclFile: '?.bemhtml.bemdecl.js'}],
+            // [enbBemTechs.files, {depsFile: '?.bemhtml.deps.js', filesTarget: '?.bemhtml.files',
+            //     dirsTarget: '?.bemhtml.dirs'}],
+            // [techs.bemhtml, {target: '?.browser.bemhtml.js', filesTarget: '?.bemhtml.files',
+            //     devMode: process.env.BEMHTML_ENV === 'development'}],
 
-            // js
+            // browser js + bh
             [techs.browserJs],
-            [techs.fileMerge, {target: '?.pre.js', sources: ['?.browser.bemhtml.js', '?.browser.js']}],
-            // [techs.fileMerge, {target: '?.pre.js', sources: ['?.browser.bh.js', '?.browser.js']}],
+            [techs.fileMerge, {target: '?.pre.js', sources: ['?.browser.bh.js', '?.browser.js']}],
             [techs.prependYm, {source: '?.pre.js'}],
+            // browser js + bemhtml
+            // [techs.fileMerge, {target: '?.pre.js', sources: ['?.browser.bemhtml.js', '?.browser.js']}],
 
             // borschik
             [techs.borschik, {sourceTarget: '?.js', destTarget: '_?.js', freeze: true, minify: isProd}],
@@ -108,8 +108,8 @@ module.exports = function (config) {
             // '?.bemtree.js',
             '?.node.js',
             '_?.js',
-            // '?.bh.js',
-            '?.bemhtml.js',
+            '?.bh.js',
+            // '?.bemhtml.js',
             '?.html'
         ]);
     });
